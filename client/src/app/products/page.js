@@ -1,10 +1,11 @@
 import React from 'react';
-import ProductCard from '@/components/shared/product-card/ProductCard';
-import { getAllProductsData } from '@/lib/actions/server';
+import { getAllProductsData, getFeaturedCategoriesData } from '@/lib/actions/server';
+import ProductListContainer from '@/components/product-list/ProductListContainer';
 
 export default async function AllProductsPage() {
-  // Retrieve all products from the database on the server
+  // Retrieve all products and categories from the database on the server
   const products = await getAllProductsData();
+  const categories = await getFeaturedCategoriesData();
 
   return (
     <div className="w-full bg-[#f4f7fa] min-h-screen py-8">
@@ -28,28 +29,10 @@ export default async function AllProductsPage() {
               Explore our full collection of premium gadgets and electronics
             </p>
           </div>
-          <span className="text-xs font-bold text-gray-500 bg-white border border-gray-200 rounded px-2.5 py-1">
-            Total: {products.length} Items
-          </span>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {products.map((product) => (
-            <div key={product.id} className="w-full">
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
-
-        {products.length === 0 && (
-          <div className="text-center py-16 bg-white border border-gray-200 rounded-lg">
-            <h3 className="text-lg font-bold text-gray-800 mb-1">No Products Found</h3>
-            <p className="text-sm text-gray-400">
-              There are currently no products available in the database.
-            </p>
-          </div>
-        )}
+        {/* Interactive Container with filters and layouts */}
+        <ProductListContainer initialProducts={products} categories={categories} />
 
       </div>
     </div>
