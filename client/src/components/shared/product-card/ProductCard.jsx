@@ -1,10 +1,12 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { ShoppingCart, Star, StarFill } from '@gravity-ui/icons';
 
 export default function ProductCard({ product }) {
   const {
+    id,
     title,
     image,
     price,
@@ -37,7 +39,7 @@ export default function ProductCard({ product }) {
       )}
 
       {/* Product Image Area */}
-      <div className="relative w-full aspect-square flex items-center justify-center mb-3 overflow-hidden rounded bg-gray-50">
+      <Link href={`/product/${id}`} className="relative w-full aspect-square flex items-center justify-center mb-3 overflow-hidden rounded bg-gray-50 cursor-pointer block">
         {!hasError ? (
           <img
             src={image}
@@ -66,7 +68,7 @@ export default function ProductCard({ product }) {
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Stock Status */}
       <div className="mb-2 flex items-center gap-1.5">
@@ -105,7 +107,9 @@ export default function ProductCard({ product }) {
 
       {/* Title */}
       <h3 className="text-gray-800 text-xs font-medium line-clamp-2 min-h-[2rem] hover:text-[#0e52b2] transition-colors duration-200 mb-2 leading-relaxed">
-        {title}
+        <Link href={`/product/${id}`}>
+          {title}
+        </Link>
       </h3>
 
       {/* Pricing Info */}
