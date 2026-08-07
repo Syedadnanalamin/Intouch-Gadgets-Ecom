@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from '@/components/homepage/banner/Banner';
 import ProductSection from '@/components/homepage/product-section/ProductSection';
-import { getFeaturedCategoriesData } from '@/actions/server';
+import { getFeaturedCategoriesData } from '@/lib/actions/server';
 
 export default async function Home() {
   // Retrieve featured categories and their products from the backend API
