@@ -3,39 +3,9 @@
 import React, { useState } from 'react';
 import { ShoppingCart, StarFill, Star, Thunderbolt } from '@gravity-ui/icons';
 
-// Hardcoded Single Product Object (can be customized dynamically later)
-const mockProduct = {
-  id: "6kw-hybrid-solar-power-package-setup-28",
-  title: "6KW Hybrid Solar Power Package | Deye 6KW Inverter with GearUP 16KWH Battery & Lesso 595W 7 pcs Panels (Solar Setup - 28)",
-  productId: "22177",
-  brand: "GearUp",
-  rating: 4.8,
-  reviewsCount: 24,
-  price: 434500,
-  originalPrice: 460000,
-  discount: 6,
-  inStock: true,
-  image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&auto=format&fit=crop&q=60",
-  thumbnails: [
-    "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1620000617482-821324eb9a14?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=200&auto=format&fit=crop&q=60"
-  ],
-  description: "Achieve energy independence in Bangladesh with this premium solar package setup. Ideal for powering home appliances during loadshedding.",
-  specifications: [
-    { label: "Inverter", value: "Deye 6KW Hybrid Inverter" },
-    { label: "Battery", value: "GearUP 16KWH LiFePO4 Lithium Battery" },
-    { label: "Solar Panels", value: "Lesso 595W Monocrystalline (7 Pcs)" },
-    { label: "Structure", value: "Premium Aluminum Roof Mounting Bracket" },
-    { label: "AC/DC Protection Box", value: "TOMZN SPDs & Circuit Breakers Included" },
-    { label: "Warranty", value: "5 Years Service Warranty" }
-  ]
-};
-
-export default function ProductDetails({ productId }) {
+export default function ProductDetails({ product }) {
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(mockProduct.image);
+  const [selectedImage, setSelectedImage] = useState(product.image);
   const [activeTab, setActiveTab] = useState("description");
 
   const formatPrice = (amount) => {
@@ -60,7 +30,7 @@ export default function ProductDetails({ productId }) {
           <span>&gt;</span>
           <a href="#" className="hover:text-[#0e52b2] transition-colors">Solar & Green Energy</a>
           <span>&gt;</span>
-          <span className="text-gray-700 font-medium truncate max-w-md">{mockProduct.title}</span>
+          <span className="text-gray-700 font-medium truncate max-w-md">{product.title}</span>
         </div>
 
         {/* Product Details Section */}
@@ -72,14 +42,14 @@ export default function ProductDetails({ productId }) {
             <div className="w-full aspect-square border border-gray-200 rounded-lg flex items-center justify-center overflow-hidden bg-gray-50">
               <img
                 src={selectedImage}
-                alt={mockProduct.title}
+                alt={product.title}
                 className="object-contain max-h-full max-w-full p-4 transition-all duration-300"
               />
             </div>
 
             {/* Thumbnails Row */}
             <div className="flex gap-2.5 overflow-x-auto py-1">
-              {mockProduct.thumbnails.map((thumb, index) => (
+              {product.thumbnails && product.thumbnails.map((thumb, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(thumb)}
@@ -97,7 +67,7 @@ export default function ProductDetails({ productId }) {
             
             {/* Title */}
             <h1 className="text-gray-900 text-lg sm:text-xl font-bold leading-relaxed mb-3">
-              {mockProduct.title}
+              {product.title}
             </h1>
 
             {/* Ratings & Metadata */}
@@ -105,20 +75,20 @@ export default function ProductDetails({ productId }) {
               <div className="flex items-center gap-1.5">
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
-                    i < Math.floor(mockProduct.rating) ? (
+                    i < Math.floor(product.rating) ? (
                       <StarFill key={i} className="w-4 h-4 fill-current" />
                     ) : (
                       <Star key={i} className="w-4 h-4 text-gray-300" />
                     )
                   ))}
                 </div>
-                <span className="font-bold text-gray-700">{mockProduct.rating}</span>
-                <span className="text-gray-400">({mockProduct.reviewsCount} reviews)</span>
+                <span className="font-bold text-gray-700">{product.rating}</span>
+                <span className="text-gray-400">({product.reviewsCount} reviews)</span>
               </div>
               <span className="text-gray-300">|</span>
-              <span>Product ID: <strong className="text-gray-700">{mockProduct.productId}</strong></span>
+              <span>Product ID: <strong className="text-gray-700">{product.productId}</strong></span>
               <span className="text-gray-300">|</span>
-              <span>Brand: <strong className="text-[#0e52b2]">{mockProduct.brand}</strong></span>
+              <span>Brand: <strong className="text-[#0e52b2]">{product.brand}</strong></span>
             </div>
 
             {/* Price Block */}
@@ -126,23 +96,23 @@ export default function ProductDetails({ productId }) {
               <div className="flex items-baseline gap-3 mb-1">
                 <span className="text-[#0e52b2] text-2xl sm:text-3xl font-black flex items-center">
                   <span className="text-xs mr-0.5">৳</span>
-                  {formatPrice(mockProduct.price)}
+                  {formatPrice(product.price)}
                 </span>
                 
-                {mockProduct.originalPrice > mockProduct.price && (
+                {product.originalPrice > product.price && (
                   <span className="text-gray-400 text-sm line-through">
-                    ৳{formatPrice(mockProduct.originalPrice)}
+                    ৳{formatPrice(product.originalPrice)}
                   </span>
                 )}
 
                 <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-md">
-                  {mockProduct.discount}% OFF
+                  {product.discount}% OFF
                 </span>
               </div>
 
-              {mockProduct.originalPrice > mockProduct.price && (
+              {product.originalPrice > product.price && (
                 <div className="text-xs text-emerald-600 font-bold">
-                  Save ৳{formatPrice(mockProduct.originalPrice - mockProduct.price)}
+                  Save ৳{formatPrice(product.originalPrice - product.price)}
                 </div>
               )}
             </div>
@@ -248,7 +218,7 @@ export default function ProductDetails({ productId }) {
                 <div>
                   <h3 className="font-bold text-gray-900 mb-2">Overview: Achieve Energy Independence in Bangladesh</h3>
                   <p className="text-gray-600">
-                    {mockProduct.description} Step into a future of reliable and sustainable power with the Complete Hybrid Solar Power Package, also known as Solar Setup - 28. Designed specifically for homes and small businesses across Bangladesh, this premium solar solution combines cutting-edge technology from Deye, GearUP, and Lesso.
+                    {product.description} Step into a future of reliable and sustainable power with the Complete Hybrid Solar Power Package, also known as Solar Setup - 28. Designed specifically for homes and small businesses across Bangladesh, this premium solar solution combines cutting-edge technology from Deye, GearUP, and Lesso.
                   </p>
                 </div>
               </div>
@@ -256,7 +226,7 @@ export default function ProductDetails({ productId }) {
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 text-sm">
                   <tbody className="divide-y divide-gray-100">
-                    {mockProduct.specifications.map((spec, index) => (
+                    {product.specifications && product.specifications.map((spec, index) => (
                       <tr key={index} className={index % 2 === 0 ? 'bg-[#f8fafc]' : 'bg-white'}>
                         <td className="px-6 py-3 font-semibold text-gray-600 w-1/3">{spec.label}</td>
                         <td className="px-6 py-3 text-gray-800">{spec.value}</td>
