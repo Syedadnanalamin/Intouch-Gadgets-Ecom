@@ -353,8 +353,11 @@ export default function CheckoutPage() {
                   </div>
 
                 </div>
-                {/* Order Submission Panel */}
-                <div className="text-center">
+
+              </div>
+
+              {/* Order Submission Panel */}
+              <div className="text-center">
                 <button
                   type="submit"
                   className="w-full bg-[#0c1f3c] hover:bg-black text-white font-bold py-3.5 px-6 rounded-md shadow-sm transition-all text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 active:scale-[0.99]"
