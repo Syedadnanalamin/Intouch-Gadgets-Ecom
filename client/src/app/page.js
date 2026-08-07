@@ -15,7 +15,7 @@ export default async function Home() {
 
       {/* Main Content Area - Dynamic Sections */}
       <div className="flex flex-col gap-2">
-        {categories.map((category) => (
+        {categories.slice(0, 4).map((category) => (
           <ProductSection
             key={category.id}
             title={category.name}

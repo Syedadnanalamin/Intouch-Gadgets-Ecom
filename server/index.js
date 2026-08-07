@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // Load environment variables
 dotenv.config();
 
@@ -26,10 +26,9 @@ async function run() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
 
-    app.get('/test', (req, res) => {
-      console.log('Test route hit');
-      res.send('Test route working');
-    });
+
+
+
 
     /**
      * GET /
@@ -43,7 +42,7 @@ async function run() {
 
         // Aggregation pipeline to fetch categories and nested products
         const pipeline = [
-          
+
           /**
            * STAGE 1: Filter Categories
            * Matches only categories that are marked as featured and active.
@@ -55,15 +54,11 @@ async function run() {
             }
           },
 
-          /**
-           * STAGE 2: Lookup Products
-           * Performs a left outer join to the "products" collection.
-           * Employs a custom lookup pipeline to limit and sort the joined products.
-           */
+
           {
             $lookup: {
               from: "products",
-              let: { categoryIdObj: "$_id" }, // Define category _id as a variable for the sub-pipeline
+              let: { categoryIdObj: "$_id" },
               pipeline: [
                 // Sub-stage 1: Match products where products.categoryId matches categories._id
                 {
@@ -80,15 +75,11 @@ async function run() {
                   $limit: 5
                 }
               ],
-              as: "products" // Output the joined documents inside a "products" array field
+              as: "products"
             }
           },
 
-          /**
-           * STAGE 3: Filter Categories with Products
-           * Matches only categories that have at least one product in their products array.
-           * If a category has no products, it will be excluded.
-           */
+
           {
             $match: {
               "products.0": { $exists: true }
@@ -101,6 +92,44 @@ async function run() {
 
       } catch (error) {
         console.error("Aggregation endpoint error:", error);
+        res.status(500).json({
+          success: false,
+          error: "Internal Server Error"
+        });
+      }
+    });
+
+    /**
+     * GET /api/products/:id
+     * Retrieves details for a single product from the "intouch" database by its _id.
+     */
+    app.get('/api/products/:id', async (req, res) => {
+      try {
+        const db = client.db("intouch");
+        const productsCollection = db.collection("products");
+        const id = req.params.id;
+
+        let query = {};
+        try {
+          query = { _id: new ObjectId(id) };
+        } catch (err) {
+          // Fallback query if id is not a standard 24-character hex string ObjectId
+          query = { _id: id };
+        }
+
+        const product = await productsCollection.findOne(query);
+
+        if (!product) {
+          return res.status(404).json({
+            success: false,
+            error: "Product not found"
+          });
+        }
+
+        res.json(product);
+
+      } catch (error) {
+        console.error("Fetch product by ID error:", error);
         res.status(500).json({
           success: false,
           error: "Internal Server Error"

@@ -1,39 +1,35 @@
 import React from 'react';
 import ProductDetails from '@/components/ProductPage/ProductDetails';
-
-// Hardcoded Single Product Object defined on the Server Parent Component
-const mockProduct = {
-  id: "6kw-hybrid-solar-power-package-setup-28",
-  title: "6KW Hybrid Solar Power Package | Deye 6KW Inverter with GearUP 16KWH Battery & Lesso 595W 7 pcs Panels (Solar Setup - 28)",
-  productId: "22177",
-  brand: "GearUp",
-  rating: 4.8,
-  reviewsCount: 24,
-  price: 434500,
-  originalPrice: 460000,
-  discount: 6,
-  inStock: true,
-  image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&auto=format&fit=crop&q=60",
-  thumbnails: [
-    "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1620000617482-821324eb9a14?w=200&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=200&auto=format&fit=crop&q=60"
-  ],
-  description: "Achieve energy independence in Bangladesh with this premium solar package setup. Ideal for powering home appliances during loadshedding.",
-  specifications: [
-    { label: "Inverter", value: "Deye 6KW Hybrid Inverter" },
-    { label: "Battery", value: "GearUP 16KWH LiFePO4 Lithium Battery" },
-    { label: "Solar Panels", value: "Lesso 595W Monocrystalline (7 Pcs)" },
-    { label: "Structure", value: "Premium Aluminum Roof Mounting Bracket" },
-    { label: "AC/DC Protection Box", value: "TOMZN SPDs & Circuit Breakers Included" },
-    { label: "Warranty", value: "5 Years Service Warranty" }
-  ]
-};
+import { getProductDetailsData } from '@/actions/server';
 
 export default async function ProductPage({ params }) {
-  // We do not need dynamic route id logic for now as requested
+  // Read parameters dynamically on the server
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+
+  // Fetch product detail dynamically from Express API database
+  const product = await getProductDetailsData(id);
+
+  if (!product) {
+    return (
+      <div className="w-full bg-[#f4f7fa] min-h-screen py-16 flex items-center justify-center">
+        <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-md w-full text-center shadow-md">
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Product Not Found</h2>
+          <p className="text-sm text-gray-500 mb-6">
+            The product with ID "{id}" could not be located in our database.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold px-5 py-2.5 rounded transition-all text-sm"
+          >
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <ProductDetails product={mockProduct} />
+    <ProductDetails product={product} />
   );
 }

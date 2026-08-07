@@ -31,3 +31,29 @@ export async function getFeaturedCategoriesData() {
     return [];
   }
 }
+
+export async function getProductDetailsData(id) {
+  try {
+    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    
+    const res = await fetch(`${apiURL}/api/products/${id}`, {
+      cache: 'no-store' // Do not cache, ensure fresh data
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch product details for ID ${id}: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+
+    // Map MongoDB _id to standard id field
+    return {
+      ...data,
+      id: data._id
+    };
+
+  } catch (error) {
+    console.error(`Error in getProductDetailsData Server Action for ID ${id}:`, error);
+    return null;
+  }
+}
