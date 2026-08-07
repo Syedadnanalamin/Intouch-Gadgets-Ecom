@@ -306,10 +306,8 @@ export default function CheckoutPage() {
                           : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-10 bg-[#e2136e] rounded flex items-center justify-center flex-shrink-0">
-                          <svg viewBox="0 0 100 100" className="w-8 h-8 fill-white">
-                            <path d="M 20 40 L 45 20 L 50 60 L 20 40 M 50 60 L 80 30 L 60 70 L 50 60 M 60 70 L 55 85 L 45 75 L 60 70" />
-                          </svg>
+                        <div className="w-12 h-10 flex items-center justify-center flex-shrink-0 bg-white border border-gray-150 rounded overflow-hidden p-1">
+                          <img src="/BankingLogo/bkashLogo.png" alt="bKash" className="object-contain max-h-full max-w-full" />
                         </div>
                         <span className="font-bold text-sm text-gray-800">Bkash</span>
                       </div>
@@ -334,10 +332,8 @@ export default function CheckoutPage() {
                           : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-10 bg-gradient-to-br from-[#f53c00] to-[#ff6a00] rounded flex items-center justify-center flex-shrink-0">
-                          <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white">
-                            <path d="M12,2 C12,2 6,7 6,12 C6,16 9,19 12,22 C15,19 18,16 18,12 C18,7 12,2 12,2 Z M12,17 C10,17 9,15.5 9,14 C9,12 11.5,10 12,8.5 C12.5,10 15,12 15,14 C15,15.5 14,17 12,17 Z" />
-                          </svg>
+                        <div className="w-12 h-10 flex items-center justify-center flex-shrink-0 bg-white border border-gray-150 rounded overflow-hidden p-1">
+                          <img src="/BankingLogo/nagad.png" alt="Nagad" className="object-contain max-h-full max-w-full" />
                         </div>
                         <span className="font-bold text-sm text-gray-800">Nagad</span>
                       </div>
@@ -362,11 +358,8 @@ export default function CheckoutPage() {
                           : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-10 bg-[#8c3494] rounded flex items-center justify-center flex-shrink-0">
-                          <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M4.5,16.5 L12,9 L19.5,16.5 M12,9 L12,21" />
-                            <path d="M12,3 L12,9" />
-                          </svg>
+                        <div className="w-12 h-10 flex items-center justify-center flex-shrink-0 bg-white border border-gray-150 rounded overflow-hidden p-1">
+                          <img src="/BankingLogo/rocket.png" alt="Rocket" className="object-contain max-h-full max-w-full" />
                         </div>
                         <span className="font-bold text-sm text-gray-800">Rocket</span>
                       </div>
