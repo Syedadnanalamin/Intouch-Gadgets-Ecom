@@ -251,8 +251,6 @@ export default function CheckoutPage() {
                     <span><strong>Charge:</strong> ৳{formatPrice(deliveryFee)}</span>
                     <span className="text-blue-300">|</span>
                     <span><strong>Time:</strong> {deliveryTime}</span>
-                    <span className="text-blue-300">|</span>
-                    <span className="text-emerald-700 flex items-center gap-1"><Tag className="w-3.5 h-3.5 text-emerald-600" /> Free delivery above ৳100,000,000.00</span>
                   </div>
 
                 </div>

@@ -34,10 +34,7 @@ export default function CartPage() {
   // Calculate final total
   const finalTotal = cartTotal > 0 ? cartTotal + deliveryFee : 0;
 
-  // Free delivery threshold: 100,000,000 (10 Crore Taka) as funny placeholder from the screenshot
-  const freeDeliveryThreshold = 100000000;
-  const remainingForFreeDelivery = freeDeliveryThreshold - finalTotal;
-  const progressPercent = Math.min((finalTotal / freeDeliveryThreshold) * 100, 100);
+
 
   return (
     <div className="w-full bg-[#f4f7fa] min-h-screen py-10 text-gray-700">
@@ -327,28 +324,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Free Delivery Promo Bar */}
-                <div className="mt-6 pt-5 border-t border-gray-100">
-                  {remainingForFreeDelivery > 0 ? (
-                    <>
-                      <div className="text-[10px] sm:text-xs text-gray-500 font-medium mb-2 leading-relaxed">
-                        Add <strong className="text-[#0e52b2]">৳{formatPrice(remainingForFreeDelivery)}</strong> more for FREE delivery!
-                      </div>
-                      
-                      {/* Custom progress bar */}
-                      <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                        <div
-                          className="bg-blue-600 h-full rounded-full transition-all duration-500 ease-out"
-                          style={{ width: `${progressPercent}%` }}
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="text-xs text-emerald-600 font-bold flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 p-2.5 rounded">
-                      🎉 Congratulations! You qualified for Free Delivery.
-                    </div>
-                  )}
-                </div>
+
 
               </div>
 
