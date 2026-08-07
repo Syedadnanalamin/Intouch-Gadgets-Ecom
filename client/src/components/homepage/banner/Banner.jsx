@@ -61,10 +61,11 @@ export default function Banner() {
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-6">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {banners.map((banner) => (
+        {banners.map((banner, index) => (
           <div
             key={banner.id}
-            className="group relative h-[360px] rounded-xl overflow-hidden shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+            className={`group relative h-[260px] sm:h-[360px] rounded-xl overflow-hidden shadow-md transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer 
+              ${index >= 2 ? 'hidden lg:block' : 'block'}`}
           >
             {/* Background Image */}
             <img

@@ -21,8 +21,10 @@ export default function Header() {
   return (
     <header className="w-full bg-white flex flex-col border-b border-gray-200">
       
-      {/* Top Banner Notice */}
-      <div className="bg-[#0c1f3c] text-white text-[10px] sm:text-xs py-1 px-4 flex justify-between items-center font-medium">
+      {/* 1. DESKTOP VIEW HEADERS (hidden on mobile) */}
+      
+      {/* Top Banner Notice (Desktop only) */}
+      <div className="bg-[#0c1f3c] text-white text-[10px] sm:text-xs py-1 px-4 hidden md:flex justify-between items-center font-medium">
         <div className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
           <span>Assalamu Alaikum! Welcome to Intouch Gadgets.</span>
@@ -33,9 +35,8 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main Header Row */}
-      <div className="max-w-7xl w-full mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
-        
+      {/* Main Header Row (Desktop only) */}
+      <div className="max-w-7xl w-full mx-auto px-4 py-3 hidden md:flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-2 select-none cursor-pointer">
           <div className="font-black text-2xl flex items-center tracking-tight">
@@ -84,11 +85,10 @@ export default function Header() {
             </div>
           </div>
         </div>
-
       </div>
 
-      {/* Navigation bar */}
-      <div className="bg-[#0e52b2] text-white w-full relative z-40">
+      {/* Navigation bar (Desktop only) */}
+      <div className="bg-[#0e52b2] text-white w-full relative z-40 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
           
           {/* Category Dropdown Toggle */}
@@ -101,7 +101,7 @@ export default function Header() {
             <ArrowChevronDown className="w-3.5 h-3.5 ml-1" />
           </div>
 
-          {/* Absolute Categories Dropdown Menu */}
+          {/* Absolute Categories Dropdown Menu (Desktop) */}
           {isCategoryOpen && (
             <div className="absolute top-full left-4 w-60 bg-white border border-gray-200 shadow-xl rounded-b-lg z-50 py-1 divide-y divide-gray-100 animate-in fade-in slide-in-from-top-2 duration-150">
               {categories.map((cat, index) => (
@@ -138,8 +138,80 @@ export default function Header() {
             <span>Call:</span>
             <span>09678-300400</span>
           </div>
+        </div>
+      </div>
+
+
+      {/* 2. RESPONSIVE MOBILE VIEW HEADERS (visible on mobile only) */}
+      
+      <div className="relative w-full md:hidden flex flex-col bg-white">
+        
+        {/* Row 1: Hamburguer menu, Centered Logo, Account & Cart */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+          
+          {/* Hamburger Category Toggle */}
+          <button 
+            onClick={() => setIsCategoryOpen(!isCategoryOpen)} 
+            className="text-gray-700 hover:text-[#0e52b2] p-1 flex items-center justify-center transition-colors"
+          >
+            <Bars className="w-6 h-6" />
+          </button>
+
+          {/* Centered Brand Name Logo */}
+          <div className="flex items-center gap-1 font-black text-lg select-none">
+            <span className="text-[#f15a24]">Intouch</span>
+            <span className="text-[#0e52b2]">Gadgets</span>
+          </div>
+
+          {/* Action Icons Panel */}
+          <div className="flex items-center gap-4">
+            
+            {/* Account link */}
+            <a href="#" className="text-gray-700 hover:text-[#0e52b2] p-1 flex items-center justify-center">
+              <Person className="w-5 h-5 text-gray-600" />
+            </a>
+
+            {/* Shopping Cart button */}
+            <div className="relative text-gray-700 hover:text-[#0e52b2] p-1 flex items-center justify-center cursor-pointer">
+              <ShoppingCart className="w-5 h-5 text-gray-600" />
+              <span className="absolute -top-1 -right-1 bg-[#f15a24] text-white text-[8px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                3
+              </span>
+            </div>
+
+          </div>
 
         </div>
+
+        {/* Row 2: Rounded gray Search Box */}
+        <div className="p-3 bg-white border-b border-gray-100">
+          <div className="relative flex items-center w-full">
+            <Magnifier className="absolute left-3 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full bg-[#f1f3f6] text-sm text-gray-800 rounded-lg pl-9 pr-4 py-2 focus:outline-none placeholder-gray-400 font-semibold"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Dropdown Category List */}
+        {isCategoryOpen && (
+          <div className="absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-xl z-50 py-1 divide-y divide-gray-100 animate-in fade-in slide-in-from-top-2 duration-150">
+            {categories.map((cat, index) => (
+              <a
+                key={index}
+                href="#"
+                onClick={() => setIsCategoryOpen(false)}
+                className="block px-6 py-3 hover:bg-gray-50 text-gray-700 hover:text-[#0e52b2] font-bold text-xs transition-colors flex justify-between items-center"
+              >
+                <span>{cat}</span>
+                <span className="text-gray-400 text-[10px]">&raquo;</span>
+              </a>
+            ))}
+          </div>
+        )}
+
       </div>
 
     </header>
