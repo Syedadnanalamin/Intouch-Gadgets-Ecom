@@ -2,13 +2,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Person, Lock, House, GeoPin, Car, Clock, CreditCard, FileText, ShieldCheck, Tag } from '@gravity-ui/icons';
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const {
     cartItems,
-    selectedItems
+    selectedItems,
+    clearCart
   } = useCart();
 
   // Get only checked items for checkout
@@ -60,7 +63,16 @@ export default function CheckoutPage() {
       alert("Please fill in all required customer information fields.");
       return;
     }
-    alert(`Order Placed Successfully!\n\nName: ${fullName}\nTotal: ৳${formatPrice(finalTotal)}\nPayment: ${paymentType === 'full' ? 'Full Payment' : '10% Partial Payment'}\nGateway: ${paymentGateway}`);
+    
+    // Generate order details
+    const orderId = `IT-${Math.floor(100000 + Math.random() * 900000)}`;
+    const finalAmount = paymentType === 'partial' ? partialPaymentAmount : finalTotal;
+
+    // Reset shopping cart state
+    clearCart();
+
+    // Redirect to dynamic professional thankyou page
+    router.push(`/thankyou?orderId=${orderId}&amount=${finalAmount}&name=${encodeURIComponent(fullName)}&time=${encodeURIComponent(deliveryTime)}`);
   };
 
   return (
