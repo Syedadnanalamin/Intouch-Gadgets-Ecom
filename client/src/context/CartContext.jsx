@@ -36,11 +36,11 @@ export function CartProvider({ children }) {
   const triggerToast = (title, message) => {
     const id = Date.now();
     setToasts(prev => [...prev, { id, title, message }]);
-    
+
     // Auto-remove toast after 3 seconds
     setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
-    }, 3000);
+    }, 2000);
   };
 
   // Add item to cart
@@ -55,7 +55,7 @@ export function CartProvider({ children }) {
     }
 
     saveCart(updatedCart);
-    
+
     // Auto-select the item in checkout
     setSelectedItems(prev => {
       if (!prev.includes(product.id)) {
@@ -65,7 +65,7 @@ export function CartProvider({ children }) {
     });
 
     triggerToast(
-      "Added to Cart", 
+      "Added to Cart",
       `${product.title.slice(0, 30)}... added to your order.`
     );
 
@@ -76,7 +76,7 @@ export function CartProvider({ children }) {
   // Update item quantity
   const updateQuantity = (productId, qty) => {
     if (qty < 1) return;
-    const updatedCart = cartItems.map(item => 
+    const updatedCart = cartItems.map(item =>
       item.id === productId ? { ...item, quantity: qty } : item
     );
     saveCart(updatedCart);
@@ -97,8 +97,8 @@ export function CartProvider({ children }) {
 
   // Selection handlers
   const toggleItemSelection = (productId) => {
-    setSelectedItems(prev => 
-      prev.includes(productId) 
+    setSelectedItems(prev =>
+      prev.includes(productId)
         ? prev.filter(id => id !== productId)
         : [...prev, productId]
     );
@@ -114,10 +114,10 @@ export function CartProvider({ children }) {
 
   // Helper values
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  
+
   // Subtotal is sum of all items in cart
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  
+
   // Total is sum of checked items only
   const cartTotal = cartItems.reduce((acc, item) => {
     if (selectedItems.includes(item.id)) {
@@ -144,7 +144,7 @@ export function CartProvider({ children }) {
       triggerToast
     }}>
       {children}
-      
+
       {/* Sliding Cart Drawer Panel */}
       <CartDrawer />
 

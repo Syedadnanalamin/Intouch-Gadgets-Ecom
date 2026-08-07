@@ -217,15 +217,13 @@ export default function CartDrawer() {
                 >
                   View Cart
                 </Link>
-                <button
-                  onClick={() => {
-                    alert(`Proceeding to checkout with total amount: ৳${formatPrice(cartTotal)}`);
-                    setIsCartDrawerOpen(false);
-                  }}
-                  className="w-full bg-[#0e52b2] hover:bg-[#0b3d87] text-white text-xs font-bold py-3 rounded-md shadow-sm transition-all text-center uppercase tracking-wider"
+                <Link
+                  href="/checkout"
+                  onClick={() => setIsCartDrawerOpen(false)}
+                  className="block w-full bg-[#0e52b2] hover:bg-[#0b3d87] text-white text-xs font-bold py-3 rounded-md shadow-sm transition-all text-center uppercase tracking-wider"
                 >
                   Checkout Selected ({selectedItems.length})
-                </button>
+                </Link>
               </div>
 
             </div>

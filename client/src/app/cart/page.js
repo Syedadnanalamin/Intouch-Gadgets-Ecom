@@ -315,16 +315,13 @@ export default function CartPage() {
 
                 {/* Checkout button */}
                 <div className="space-y-4">
-                  <button
-                    onClick={() => {
-                      alert(`Checkout completed successfully with final total of ৳${formatPrice(couponApplied ? finalTotal * 0.9 : finalTotal)}!`);
-                    }}
-                    disabled={selectedItems.length === 0}
-                    className={`w-full bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold py-3.5 px-4 rounded-md shadow-sm transition-all text-xs sm:text-sm flex items-center justify-center gap-2 uppercase tracking-wide
-                      ${selectedItems.length === 0 ? 'opacity-50 cursor-not-allowed' : 'active:scale-[0.98]'}`}
+                  <Link
+                    href="/checkout"
+                    className={`w-full bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold py-3.5 px-4 rounded-md shadow-sm transition-all text-xs sm:text-sm flex items-center justify-center gap-2 uppercase tracking-wide text-center block
+                      ${selectedItems.length === 0 ? 'opacity-50 pointer-events-none cursor-not-allowed' : 'active:scale-[0.98]'}`}
                   >
                     🔒 Checkout Selected ({selectedItems.length})
-                  </button>
+                  </Link>
 
                   <div className="text-[10px] text-gray-400 text-center font-medium flex items-center justify-center gap-1">
                     <span>🛡️</span> Secure Checkout
