@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer() {
@@ -209,12 +210,13 @@ export default function CartDrawer() {
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-2">
-                <button
+                <Link
+                  href="/cart"
                   onClick={() => setIsCartDrawerOpen(false)}
-                  className="w-full bg-[#0c1f3c] hover:bg-black text-white text-xs font-bold py-3 rounded-md shadow-sm transition-all text-center uppercase tracking-wider"
+                  className="block w-full bg-[#0c1f3c] hover:bg-black text-white text-xs font-bold py-3 rounded-md shadow-sm transition-all text-center uppercase tracking-wider"
                 >
                   View Cart
-                </button>
+                </Link>
                 <button
                   onClick={() => {
                     alert(`Proceeding to checkout with total amount: ৳${formatPrice(cartTotal)}`);
