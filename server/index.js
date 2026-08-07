@@ -2,8 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { connectDB, db } = require('./db');
-const productsRouter = require('./routes/productsRouter');
-const { getFeaturedCategories } = require('./controllers/productsController');
+const { 
+  getFeaturedCategories, 
+  getAllProducts, 
+  getProductById 
+} = require('./controllers/productsController');
 
 dotenv.config();
 
@@ -17,11 +20,15 @@ app.use(express.json());
 // Connect to Database
 connectDB();
 
-// Root endpoint fallback
-app.get('/', getFeaturedCategories);
+// Products API Routes
+app.get('/api/products/featured', getFeaturedCategories);
+app.get('/api/products', getAllProducts);
+app.get('/api/products/:id', getProductById);
 
-// Products Router
-app.use('/api/products', productsRouter);
+// Fallback Route
+app.get('/', (req, res) => {
+  res.send('Intouch Gadgets Ecom API is running...');
+});
 
 // POST /api/orders
 app.post('/api/orders', async (req, res) => {
