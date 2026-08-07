@@ -49,7 +49,7 @@ export default function ProductDetails({ product }) {
               <img
                 src={selectedImage}
                 alt={product.title}
-                className="object-contain max-h-full max-w-full p-4 transition-all duration-300"
+                className="w-full h-full object-cover transition-all duration-300"
               />
             </div>
 
