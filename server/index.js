@@ -170,8 +170,7 @@ async function run() {
         const {
           customerInfo,
           deliveryArea,
-          paymentType,
-          paymentGateway,
+          paymentMethod,
           items,
           couponApplied
         } = req.body;
@@ -196,8 +195,7 @@ async function run() {
           orderId,
           customerInfo,
           deliveryArea,
-          paymentType,
-          paymentGateway,
+          paymentMethod,
           items,
           couponApplied,
           pricing: {

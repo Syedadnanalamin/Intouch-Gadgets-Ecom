@@ -36,6 +36,16 @@ function ThankYouContent() {
       });
   }, [orderId]);
 
+  const getPaymentMethodLabel = (method) => {
+    const mapping = {
+      cod: 'Cash on Delivery',
+      bkash: 'bKash Mobile Banking',
+      nagad: 'Nagad Mobile Banking',
+      rocket: 'Rocket Mobile Banking'
+    };
+    return mapping[method] || method || 'Cash on Delivery';
+  };
+
   const formatPrice = (amount) => {
     const val = parseFloat(amount);
     return isNaN(val) ? '0' : val.toLocaleString('en-IN');
@@ -130,9 +140,9 @@ function ThankYouContent() {
           <span className="font-extrabold text-[#0e52b2] text-sm">৳{formatPrice(order.pricing.finalTotal)}</span>
         </div>
         <div className="flex justify-between items-center border-b border-gray-200/60 pb-2">
-          <span className="text-gray-400 font-medium">Payment Selection:</span>
+          <span className="text-gray-400 font-medium">Payment Method:</span>
           <span className="font-bold text-gray-800 uppercase text-xs">
-            {order.paymentType === 'partial' ? '10% Partial Payment' : 'Full Payment'} ({order.paymentGateway})
+            {getPaymentMethodLabel(order.paymentMethod)}
           </span>
         </div>
         <div className="flex justify-between items-start">

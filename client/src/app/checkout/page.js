@@ -22,9 +22,8 @@ export default function CheckoutPage() {
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [deliveryArea, setDeliveryArea] = useState('office'); // 'office', 'inside', 'outside'
-  const [paymentType, setPaymentType] = useState('full'); // 'full' or 'partial'
-  const [paymentGateway, setPaymentGateway] = useState('pay_30'); // 'pay_30', 'bkash', 'online', 'credit'
+  const [deliveryArea, setDeliveryArea] = useState('inside'); // 'inside', 'outside'
+  const [paymentMethod, setPaymentMethod] = useState('cod'); // 'cod', 'bkash', 'nagad', 'rocket'
 
   // Coupon states
   const [couponCode, setCouponCode] = useState('');
@@ -55,9 +54,6 @@ export default function CheckoutPage() {
 
   const finalTotal = subtotal > 0 ? subtotal + deliveryFee : 0;
 
-  // Partial payment amount (10%)
-  const partialPaymentAmount = finalTotal * 0.1;
-
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (!fullName || !mobileNumber || !deliveryAddress) {
@@ -74,8 +70,7 @@ export default function CheckoutPage() {
           deliveryAddress
         },
         deliveryArea,
-        paymentType,
-        paymentGateway,
+        paymentMethod,
         items: checkoutItems.map(item => ({
           id: item.id,
           title: item.title,
@@ -203,28 +198,7 @@ export default function CheckoutPage() {
                 <div className="mt-8">
                   <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4">Select Delivery Area</h3>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    
-                    {/* Office Pickup */}
-                    <div
-                      onClick={() => setDeliveryArea('office')}
-                      className={`border rounded-lg p-3 flex items-center justify-between cursor-pointer transition-all select-none
-                        ${deliveryArea === 'office' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          checked={deliveryArea === 'office'}
-                          onChange={() => setDeliveryArea('office')}
-                          className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4 cursor-pointer"
-                        />
-                        <div>
-                          <div className="font-bold text-[11px] sm:text-xs text-gray-800">Office Pickup</div>
-                          <div className="text-[9px] text-gray-400">Free</div>
-                        </div>
-                      </div>
-                      <House className="w-4 h-4 text-gray-500" />
-                    </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
                     {/* Inside Dhaka */}
                     <div
@@ -272,9 +246,9 @@ export default function CheckoutPage() {
 
                   {/* Delivery Status Alert Line */}
                   <div className="mt-4 bg-blue-50 border border-blue-100 rounded-md p-2.5 text-[10px] sm:text-xs text-blue-800 flex flex-wrap gap-y-4 items-center">
-                    <span><strong>Selected:</strong> {deliveryArea === 'office' ? 'Office Pickup' : deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}</span>
+                    <span><strong>Selected:</strong> {deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}</span>
                     <span className="text-blue-300">|</span>
-                    <span><strong>Charge:</strong> {deliveryFee > 0 ? `৳${formatPrice(deliveryFee)}` : 'Free'}</span>
+                    <span><strong>Charge:</strong> ৳{formatPrice(deliveryFee)}</span>
                     <span className="text-blue-300">|</span>
                     <span><strong>Time:</strong> {deliveryTime}</span>
                     <span className="text-blue-300">|</span>
@@ -287,108 +261,78 @@ export default function CheckoutPage() {
                 <div className="mt-8">
                   <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4">Payment Method</h3>
                   
-                  {/* Select Payment Type */}
-                  <div className="flex gap-6 mb-4 text-xs sm:text-sm font-semibold text-gray-700 select-none">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="payment_type"
-                        checked={paymentType === 'full'}
-                        onChange={() => setPaymentType('full')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <span>Full Payment</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="payment_type"
-                        checked={paymentType === 'partial'}
-                        onChange={() => setPaymentType('partial')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <span>Partial Payment (10%)</span>
-                    </label>
-                  </div>
-
-                  {/* Gateway Options grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* Select Payment Method */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     
-                    {/* Pay in 30 Min */}
+                    {/* Cash on Delivery */}
                     <div
-                      onClick={() => setPaymentGateway('pay_30')}
-                      className={`border rounded-lg p-3 flex flex-col justify-center gap-1 cursor-pointer transition-all select-none
-                        ${paymentGateway === 'pay_30' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      onClick={() => setPaymentMethod('cod')}
+                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
+                        ${paymentMethod === 'cod' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
                     >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          checked={paymentGateway === 'pay_30'}
-                          onChange={() => setPaymentGateway('pay_30')}
-                          className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                        />
-                        <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-amber-500" /> Pay in 30 min</span>
-                      </div>
-                      <span className="text-[9px] text-red-500 font-bold ml-6">
-                        Order will be cancelled if not paid
-                      </span>
+                      <input
+                        type="radio"
+                        checked={paymentMethod === 'cod'}
+                        onChange={() => setPaymentMethod('cod')}
+                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
+                      />
+                      <span className="font-bold text-[10px] sm:text-xs text-gray-800">Cash on Delivery</span>
                     </div>
 
                     {/* bKash */}
                     <div
-                      onClick={() => setPaymentGateway('bkash')}
-                      className={`border rounded-lg p-3 flex items-center gap-2 cursor-pointer transition-all select-none
-                        ${paymentGateway === 'bkash' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      onClick={() => setPaymentMethod('bkash')}
+                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
+                        ${paymentMethod === 'bkash' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
                     >
                       <input
                         type="radio"
-                        checked={paymentGateway === 'bkash'}
-                        onChange={() => setPaymentGateway('bkash')}
+                        checked={paymentMethod === 'bkash'}
+                        onChange={() => setPaymentMethod('bkash')}
                         className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
                       />
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-5 h-5 bg-pink-500 text-white font-black text-[10px] rounded flex items-center justify-center">b</span>
-                        <span className="font-bold text-[11px] sm:text-xs text-gray-800">bKash</span>
+                      <div className="flex items-center gap-1">
+                        <span className="w-4 h-4 bg-pink-500 text-white font-black text-[9px] rounded flex items-center justify-center">b</span>
+                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">bKash</span>
                       </div>
                     </div>
 
-                    {/* Pay Online */}
+                    {/* Nagad */}
                     <div
-                      onClick={() => setPaymentGateway('online')}
-                      className={`border rounded-lg p-3 flex items-center gap-2 cursor-pointer transition-all select-none
-                        ${paymentGateway === 'online' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      onClick={() => setPaymentMethod('nagad')}
+                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
+                        ${paymentMethod === 'nagad' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
                     >
                       <input
                         type="radio"
-                        checked={paymentGateway === 'online'}
-                        onChange={() => setPaymentGateway('online')}
+                        checked={paymentMethod === 'nagad'}
+                        onChange={() => setPaymentMethod('nagad')}
                         className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
                       />
-                      <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><CreditCard className="w-3.5 h-3.5 text-emerald-600" /> Pay Online</span>
-                    </div>
-
-                  </div>
-
-                  {/* Credit row (additional card) */}
-                  <div className="mt-3 grid grid-cols-1 sm:grid-cols-3">
-                    <div
-                      onClick={() => setPaymentGateway('credit')}
-                      className={`border rounded-lg p-3 flex flex-col justify-center gap-1 cursor-pointer transition-all select-none
-                        ${paymentGateway === 'credit' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          checked={paymentGateway === 'credit'}
-                          onChange={() => setPaymentGateway('credit')}
-                          className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                        />
-                        <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><CreditCard className="w-3.5 h-3.5 text-gray-500" /> Use Credit</span>
+                      <div className="flex items-center gap-1">
+                        <span className="w-4 h-4 bg-orange-600 text-white font-black text-[9px] rounded flex items-center justify-center">n</span>
+                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">Nagad</span>
                       </div>
-                      <span className="text-[9px] text-gray-400 font-medium ml-6">
-                        Check by phone
-                      </span>
                     </div>
+
+                    {/* Rocket */}
+                    <div
+                      onClick={() => setPaymentMethod('rocket')}
+                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
+                        ${paymentMethod === 'rocket' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                    >
+                      <input
+                        type="radio"
+                        checked={paymentMethod === 'rocket'}
+                        onChange={() => setPaymentMethod('rocket')}
+                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
+                      />
+                      <div className="flex items-center gap-1">
+                        <span className="w-4 h-4 bg-purple-700 text-white font-black text-[9px] rounded flex items-center justify-center">R</span>
+                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">Rocket</span>
+                      </div>
+                    </div>
+
                   </div>
 
                 </div>
@@ -478,8 +422,8 @@ export default function CheckoutPage() {
                     <span className="text-gray-800 font-bold">৳{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Delivery ({deliveryArea === 'office' ? 'Office Pickup' : deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}):</span>
-                    <span className="text-gray-800 font-bold">{deliveryFee > 0 ? `৳${formatPrice(deliveryFee)}` : 'Free'}</span>
+                    <span className="text-gray-400">Delivery ({deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}):</span>
+                    <span className="text-gray-800 font-bold">৳{formatPrice(deliveryFee)}</span>
                   </div>
                 </div>
 
@@ -487,16 +431,9 @@ export default function CheckoutPage() {
                 <div className="flex justify-between items-baseline pt-4">
                   <span className="text-gray-900 font-black text-sm">Total</span>
                   <span className="text-lg sm:text-xl font-black text-[#0e52b2]">
-                    ৳{formatPrice(paymentType === 'partial' ? partialPaymentAmount : finalTotal)}
+                    ৳{formatPrice(finalTotal)}
                   </span>
                 </div>
-
-                {paymentType === 'partial' && (
-                  <div className="text-[10px] text-amber-600 font-bold text-right mt-1 leading-normal">
-                    * Showing 10% partial payment amount.<br />
-                    Remaining ৳{formatPrice(finalTotal - partialPaymentAmount)} payable on delivery.
-                  </div>
-                )}
 
               </div>
 
