@@ -259,78 +259,129 @@ export default function CheckoutPage() {
 
                 {/* Payment Method Block */}
                 <div className="mt-8">
-                  <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4">Payment Method</h3>
+                  <h3 className="text-base font-extrabold text-[#0c1f3c] tracking-tight mb-5 border-l-4 border-orange-500 pl-3 select-none">
+                    Payment method
+                  </h3>
                   
-                  {/* Select Payment Method */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     
                     {/* Cash on Delivery */}
                     <div
                       onClick={() => setPaymentMethod('cod')}
-                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
-                        ${paymentMethod === 'cod' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      className={`border rounded-lg p-4 flex items-center justify-between cursor-pointer transition-all select-none
+                        ${paymentMethod === 'cod' 
+                          ? 'border-orange-500 bg-orange-50/10 ring-1 ring-orange-500/30' 
+                          : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
-                      <input
-                        type="radio"
-                        checked={paymentMethod === 'cod'}
-                        onChange={() => setPaymentMethod('cod')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <span className="font-bold text-[10px] sm:text-xs text-gray-800">Cash on Delivery</span>
+                      <div className="flex items-center gap-3">
+                        {/* Custom cash & box hand vector */}
+                        <div className="w-12 h-10 relative flex-shrink-0 bg-gray-50 border border-gray-100 rounded flex items-center justify-center overflow-hidden">
+                          <svg viewBox="0 0 64 48" className="w-10 h-8">
+                            <rect x="22" y="18" width="20" height="16" rx="2" fill="#f59e0b" />
+                            <path d="M22,22 L32,26 L42,22" stroke="#d97706" strokeWidth="1.5" fill="none" />
+                            <rect x="10" y="8" width="18" height="10" rx="1.5" fill="#10b981" transform="rotate(-15 10 8)" />
+                            <circle cx="18" cy="11" r="2" fill="#047857" />
+                            <path d="M2,34 Q8,32 14,35 L18,38 L14,42 Q6,42 2,38 Z" fill="#fed7aa" />
+                            <path d="M58,34 Q52,32 46,35 L42,38 L46,42 Q54,42 58,38 Z" fill="#fed7aa" />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-sm text-gray-800">Cash On Delivery</span>
+                      </div>
+                      
+                      {paymentMethod === 'cod' ? (
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white">
+                          <svg className="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border border-gray-300 bg-white" />
+                      )}
                     </div>
 
                     {/* bKash */}
                     <div
                       onClick={() => setPaymentMethod('bkash')}
-                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
-                        ${paymentMethod === 'bkash' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      className={`border rounded-lg p-4 flex items-center justify-between cursor-pointer transition-all select-none
+                        ${paymentMethod === 'bkash' 
+                          ? 'border-orange-500 bg-orange-50/10 ring-1 ring-orange-500/30' 
+                          : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
-                      <input
-                        type="radio"
-                        checked={paymentMethod === 'bkash'}
-                        onChange={() => setPaymentMethod('bkash')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <div className="flex items-center gap-1">
-                        <span className="w-4 h-4 bg-pink-500 text-white font-black text-[9px] rounded flex items-center justify-center">b</span>
-                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">bKash</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-10 bg-[#e2136e] rounded flex items-center justify-center flex-shrink-0">
+                          <svg viewBox="0 0 100 100" className="w-8 h-8 fill-white">
+                            <path d="M 20 40 L 45 20 L 50 60 L 20 40 M 50 60 L 80 30 L 60 70 L 50 60 M 60 70 L 55 85 L 45 75 L 60 70" />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-sm text-gray-800">Bkash</span>
                       </div>
+                      
+                      {paymentMethod === 'bkash' ? (
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white">
+                          <svg className="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border border-gray-300 bg-white" />
+                      )}
                     </div>
 
                     {/* Nagad */}
                     <div
                       onClick={() => setPaymentMethod('nagad')}
-                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
-                        ${paymentMethod === 'nagad' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      className={`border rounded-lg p-4 flex items-center justify-between cursor-pointer transition-all select-none
+                        ${paymentMethod === 'nagad' 
+                          ? 'border-orange-500 bg-orange-50/10 ring-1 ring-orange-500/30' 
+                          : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
-                      <input
-                        type="radio"
-                        checked={paymentMethod === 'nagad'}
-                        onChange={() => setPaymentMethod('nagad')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <div className="flex items-center gap-1">
-                        <span className="w-4 h-4 bg-orange-600 text-white font-black text-[9px] rounded flex items-center justify-center">n</span>
-                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">Nagad</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-10 bg-gradient-to-br from-[#f53c00] to-[#ff6a00] rounded flex items-center justify-center flex-shrink-0">
+                          <svg viewBox="0 0 24 24" className="w-7 h-7 fill-white">
+                            <path d="M12,2 C12,2 6,7 6,12 C6,16 9,19 12,22 C15,19 18,16 18,12 C18,7 12,2 12,2 Z M12,17 C10,17 9,15.5 9,14 C9,12 11.5,10 12,8.5 C12.5,10 15,12 15,14 C15,15.5 14,17 12,17 Z" />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-sm text-gray-800">Nagad</span>
                       </div>
+                      
+                      {paymentMethod === 'nagad' ? (
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white">
+                          <svg className="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border border-gray-300 bg-white" />
+                      )}
                     </div>
 
                     {/* Rocket */}
                     <div
                       onClick={() => setPaymentMethod('rocket')}
-                      className={`border rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 cursor-pointer text-center transition-all select-none
-                        ${paymentMethod === 'rocket' ? 'border-[#0e52b2] bg-blue-50/20 ring-1 ring-[#0e52b2]' : 'border-gray-200 hover:border-gray-300'}`}
+                      className={`border rounded-lg p-4 flex items-center justify-between cursor-pointer transition-all select-none
+                        ${paymentMethod === 'rocket' 
+                          ? 'border-orange-500 bg-orange-50/10 ring-1 ring-orange-500/30' 
+                          : 'border-gray-200 hover:border-gray-300 bg-white'}`}
                     >
-                      <input
-                        type="radio"
-                        checked={paymentMethod === 'rocket'}
-                        onChange={() => setPaymentMethod('rocket')}
-                        className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
-                      />
-                      <div className="flex items-center gap-1">
-                        <span className="w-4 h-4 bg-purple-700 text-white font-black text-[9px] rounded flex items-center justify-center">R</span>
-                        <span className="font-bold text-[10px] sm:text-xs text-gray-800">Rocket</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-10 bg-[#8c3494] rounded flex items-center justify-center flex-shrink-0">
+                          <svg viewBox="0 0 24 24" className="w-6 h-6 fill-none stroke-white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M4.5,16.5 L12,9 L19.5,16.5 M12,9 L12,21" />
+                            <path d="M12,3 L12,9" />
+                          </svg>
+                        </div>
+                        <span className="font-bold text-sm text-gray-800">Rocket</span>
                       </div>
+                      
+                      {paymentMethod === 'rocket' ? (
+                        <div className="w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center text-white">
+                          <svg className="w-3 h-3 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border border-gray-300 bg-white" />
+                      )}
                     </div>
 
                   </div>
