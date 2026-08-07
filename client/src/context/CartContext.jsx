@@ -148,12 +148,12 @@ export function CartProvider({ children }) {
       {/* Sliding Cart Drawer Panel */}
       <CartDrawer />
 
-      {/* Floating Toast Notification Portal Overlay */}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
+      {/* Floating Toast Notification Portal Overlay (Top Right Position) */}
+      <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
         {toasts.map(toast => (
           <div
             key={toast.id}
-            className="pointer-events-auto bg-[#0c1f3c] text-white border border-slate-700/50 rounded-lg p-3.5 shadow-xl flex items-start gap-3 animate-in slide-in-from-bottom-5 fade-in duration-200"
+            className="pointer-events-auto bg-[#0c1f3c] text-white border border-slate-700/50 rounded-lg p-3.5 shadow-xl flex items-start gap-3 animate-in slide-in-from-top-5 fade-in duration-200"
           >
             <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold mt-0.5 flex-shrink-0">
               ✓
