@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductDetails from '@/components/ProductPage/ProductDetails';
-import { getProductDetailsData } from '@/lib/actions/server';
+import { getProductDetailsData } from '@/lib/actions/productActions';
 
 export default async function ProductPage({ params }) {
   // Read parameters dynamically on the server
