@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Star, StarFill } from '@gravity-ui/icons';
+import { useCart } from '@/context/CartContext';
 
 export default function ProductCard({ product }) {
   const {
@@ -19,6 +20,13 @@ export default function ProductCard({ product }) {
   } = product;
 
   const [hasError, setHasError] = React.useState(false);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+  };
 
   // Calculate savings
   const savings = originalPrice - price;
@@ -140,6 +148,7 @@ export default function ProductCard({ product }) {
       {/* Add to Order Button */}
       <button 
         disabled={!inStock}
+        onClick={handleAddToCart}
         className={`w-full py-2 px-3 rounded text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-300 
           ${inStock 
             ? 'bg-[#0e52b2] hover:bg-[#0b3d87] text-white hover:shadow-md active:scale-[0.98]' 

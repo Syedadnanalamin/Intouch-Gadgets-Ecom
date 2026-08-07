@@ -2,11 +2,17 @@
 
 import React, { useState } from 'react';
 import { ShoppingCart, StarFill, Star, Thunderbolt } from '@gravity-ui/icons';
+import { useCart } from '@/context/CartContext';
 
 export default function ProductDetails({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.image);
   const [activeTab, setActiveTab] = useState("description");
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+  };
 
   const formatPrice = (amount) => {
     return amount.toLocaleString('en-IN');
@@ -146,7 +152,10 @@ export default function ProductDetails({ product }) {
               </div>
 
               {/* Add to Order Button */}
-              <button className="flex-1 bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold rounded-md h-11 px-6 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]">
+              <button 
+                onClick={handleAddToCart}
+                className="flex-1 bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold rounded-md h-11 px-6 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]"
+              >
                 <ShoppingCart className="w-4 h-4" />
                 Add to Order
               </button>

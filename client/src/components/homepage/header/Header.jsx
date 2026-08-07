@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Magnifier, Person, ShoppingCart, Bars, ArrowChevronDown, Thunderbolt } from '@gravity-ui/icons';
+import { useCart } from '@/context/CartContext';
 
 export default function Header() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const { cartCount, cartTotal } = useCart();
 
   const categories = [
     "Solar & Green Energy",
@@ -68,12 +70,12 @@ export default function Header() {
             <div className="relative">
               <ShoppingCart className="w-6 h-6 text-gray-600" />
               <span className="absolute -top-1.5 -right-1.5 bg-[#f15a24] text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                3
+                {cartCount}
               </span>
             </div>
             <div className="hidden sm:flex flex-col text-left">
               <span className="text-[10px] text-gray-400 leading-none">Your Cart</span>
-              <span className="text-xs font-bold leading-none mt-1">৳ 24,500</span>
+              <span className="text-xs font-bold leading-none mt-1">৳ {cartTotal.toLocaleString('en-IN')}</span>
             </div>
           </div>
 
@@ -176,7 +178,7 @@ export default function Header() {
             <div className="relative text-gray-700 hover:text-[#0e52b2] p-1 flex items-center justify-center cursor-pointer">
               <ShoppingCart className="w-5 h-5 text-gray-600" />
               <span className="absolute -top-1 -right-1 bg-[#f15a24] text-white text-[8px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
-                3
+                {cartCount}
               </span>
             </div>
 
