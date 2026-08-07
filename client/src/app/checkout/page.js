@@ -57,22 +57,60 @@ export default function CheckoutPage() {
   // Partial payment amount (10%)
   const partialPaymentAmount = finalTotal * 0.1;
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (!fullName || !mobileNumber || !deliveryAddress) {
       alert("Please fill in all required customer information fields.");
       return;
     }
-    
-    // Generate order details
-    const orderId = `IT-${Math.floor(100000 + Math.random() * 900000)}`;
-    const finalAmount = paymentType === 'partial' ? partialPaymentAmount : finalTotal;
 
-    // Reset shopping cart state
-    clearCart();
+    try {
+      const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+      const orderPayload = {
+        customerInfo: {
+          fullName,
+          mobileNumber,
+          deliveryAddress
+        },
+        deliveryArea,
+        paymentType,
+        paymentGateway,
+        items: checkoutItems.map(item => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        couponApplied
+      };
 
-    // Redirect to dynamic professional thankyou page
-    router.push(`/thankyou?orderId=${orderId}&amount=${finalAmount}&name=${encodeURIComponent(fullName)}&time=${encodeURIComponent(deliveryTime)}`);
+      const res = await fetch(`${apiURL}/api/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderPayload)
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to place order on server.");
+      }
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Reset shopping cart state
+        clearCart();
+        // Redirect to dynamic professional thankyou page
+        router.push(`/thankyou?orderId=${data.orderId}`);
+      } else {
+        alert("Failed to place order. Please try again.");
+      }
+    } catch (error) {
+      console.error("Place order error:", error);
+      alert("An error occurred while processing your order. Please try again later.");
+    }
   };
 
   return (
