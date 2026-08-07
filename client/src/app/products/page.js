@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from '@/components/shared/product-card/ProductCard';
-import { getAllProductsData } from '@/lib/actions/server';
+import { getAllProductsData } from '@/lib/actions/productActions';
 
 export default async function AllProductsPage() {
   // Retrieve all products from the database on the server

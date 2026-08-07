@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-// Load environment variables
+const { connectDB } = require('./db');
+const productsRouter = require('./routes/productsRouter');
+const { getFeaturedCategories } = require('./controllers/productsController');
+
 dotenv.config();
 
 const app = express();
@@ -12,160 +14,14 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const client = new MongoClient(process.env.MONGODB_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-async function run() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+// Connect to Database
+connectDB();
 
+// Root endpoint fallback
+app.get('/', getFeaturedCategories);
 
-
-
-
-
-    /**
-     * GET /
-     * Retrieves active, featured categories along with their newest 5 products
-     * dynamically queried from the "intouch" database.
-     */
-    app.get('/', async (req, res) => {
-      try {
-        const db = client.db("intouch");
-        const categoriesCollection = db.collection("categories");
-
-        // Aggregation pipeline to fetch categories and nested products
-        const pipeline = [
-
-          /**
-           * STAGE 1: Filter Categories
-           * Matches only categories that are marked as featured and active.
-           */
-          {
-            $match: {
-              isFeatured: true,
-              status: "active"
-            }
-          },
-
-
-          {
-            $lookup: {
-              from: "products",
-              let: { categoryIdObj: "$_id" },
-              pipeline: [
-                // Sub-stage 1: Match products where products.categoryId matches categories._id
-                {
-                  $match: {
-                    $expr: { $eq: ["$categoryId", "$$categoryIdObj"] }
-                  }
-                },
-                // Sub-stage 2: Sort products by newest first (descending _id order)
-                {
-                  $sort: { _id: -1 }
-                },
-                // Sub-stage 3: Limit the output to the first 5 products for each category
-                {
-                  $limit: 5
-                }
-              ],
-              as: "products"
-            }
-          },
-
-
-          {
-            $match: {
-              "products.0": { $exists: true }
-            }
-          }
-        ];
-
-        const featuredData = await categoriesCollection.aggregate(pipeline).toArray();
-        res.json(featuredData);
-
-      } catch (error) {
-        console.error("Aggregation endpoint error:", error);
-        res.status(500).json({
-          success: false,
-          error: "Internal Server Error"
-        });
-      }
-    });
-
-    /**
-     * GET /api/products/:id
-     * Retrieves details for a single product from the "intouch" database by its _id.
-     */
-    app.get('/api/products/:id', async (req, res) => {
-      try {
-        const db = client.db("intouch");
-        const productsCollection = db.collection("products");
-        const id = req.params.id;
-
-        let query = {};
-        try {
-          query = { _id: new ObjectId(id) };
-        } catch (err) {
-          // Fallback query if id is not a standard 24-character hex string ObjectId
-          query = { _id: id };
-        }
-
-        const product = await productsCollection.findOne(query);
-
-        if (!product) {
-          return res.status(404).json({
-            success: false,
-            error: "Product not found"
-          });
-        }
-
-        res.json(product);
-
-      } catch (error) {
-        console.error("Fetch product by ID error:", error);
-        res.status(500).json({
-          success: false,
-          error: "Internal Server Error"
-        });
-      }
-    });
-
-    /**
-     * GET /api/products
-     * Retrieves all products in the "intouch" database sorted by newest first.
-     */
-    app.get('/api/products', async (req, res) => {
-      try {
-        const db = client.db("intouch");
-        const productsCollection = db.collection("products");
-
-        const products = await productsCollection.find({}).sort({ _id: -1 }).toArray();
-        res.json(products);
-
-      } catch (error) {
-        console.error("Fetch all products error:", error);
-        res.status(500).json({
-          success: false,
-          error: "Internal Server Error"
-        });
-      }
-    });
-
-  } finally {
-    // Ensures that the client will close when you finish/error
-    // NOTE: Commented out client.close() so the database connection stays active for incoming requests
-    // await client.close();
-  }
-}
-run().catch(console.dir);
-
+// Products Router
+app.use('/api/products', productsRouter);
 
 // Start Server
 app.listen(PORT, () => {
