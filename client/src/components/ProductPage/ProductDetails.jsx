@@ -34,7 +34,7 @@ export default function ProductDetails({ product }) {
   return (
     <div className="w-full bg-[#f4f7fa] min-h-screen py-6">
       <div className="max-w-7xl mx-auto px-4">
-        
+
         {/* Breadcrumbs */}
         <div className="text-xs text-gray-500 mb-6 flex items-center gap-1">
           <a href="/" className="hover:text-[#0e52b2] transition-colors">Home</a>
@@ -46,7 +46,7 @@ export default function ProductDetails({ product }) {
 
         {/* Product Details Section */}
         <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-          
+
           {/* Left Column: Images */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             {/* Main Preview Box */}
@@ -75,7 +75,7 @@ export default function ProductDetails({ product }) {
 
           {/* Right Column: Title and Details */}
           <div className="lg:col-span-7 flex flex-col">
-            
+
             {/* Title */}
             <h1 className="text-gray-900 text-lg sm:text-xl font-bold leading-relaxed mb-3">
               {product.title}
@@ -109,7 +109,7 @@ export default function ProductDetails({ product }) {
                   <span className="text-xs mr-0.5">৳</span>
                   {formatPrice(product.price)}
                 </span>
-                
+
                 {product.originalPrice > product.price && (
                   <span className="text-gray-400 text-sm line-through">
                     ৳{formatPrice(product.originalPrice)}
@@ -138,7 +138,7 @@ export default function ProductDetails({ product }) {
 
             {/* Action Bar (Qty and Buttons) */}
             <div className="flex flex-col gap-4 border-b border-gray-100 pb-5 mb-5">
-              
+
               {/* Qty Selector */}
               <div className="flex items-center gap-3">
                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Quantity:</span>
@@ -161,9 +161,9 @@ export default function ProductDetails({ product }) {
 
               {/* Action Buttons Row - always side by side! */}
               <div className="flex flex-row gap-3 w-full">
-                
+
                 {/* Add to Order Button */}
-                <button 
+                <button
                   onClick={handleAddToCart}
                   className="flex-1 bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold rounded-md h-11 px-3 flex items-center justify-center gap-1.5 shadow-sm transition-all text-xs sm:text-sm active:scale-[0.99]"
                 >
@@ -172,7 +172,7 @@ export default function ProductDetails({ product }) {
                 </button>
 
                 {/* Buy Now Button */}
-                <button 
+                <button
                   onClick={handleBuyNow}
                   className="flex-1 bg-[#0c1f3c] hover:bg-black text-white font-bold rounded-md h-11 px-3 flex items-center justify-center gap-1.5 shadow-sm transition-all text-xs sm:text-sm active:scale-[0.99]"
                 >
@@ -187,13 +187,7 @@ export default function ProductDetails({ product }) {
             <div className="bg-[#f8fafc] border border-gray-200 rounded-lg p-4">
               <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 select-none">Shipping & Delivery Options</h3>
               <ul className="text-xs space-y-2.5 text-gray-600">
-                <li className="flex justify-between items-center border-b border-gray-150/60 pb-2">
-                  <span className="flex items-center gap-1.5">
-                    <House className="w-4 h-4 text-gray-500" />
-                    Office Pickup (Free)
-                  </span>
-                  <span className="font-semibold text-gray-800">1-2 Business Days</span>
-                </li>
+
                 <li className="flex justify-between items-center border-b border-gray-150/60 pb-2">
                   <span className="flex items-center gap-1.5">
                     <GeoPin className="w-4 h-4 text-[#0e52b2]" />
@@ -238,7 +232,7 @@ export default function ProductDetails({ product }) {
           <div className="p-6">
             {activeTab === "description" ? (
               <div className="flex flex-col gap-6 text-sm text-gray-700 leading-relaxed">
-                
+
                 {/* Warning Alert Box */}
                 <div className="bg-amber-50 border-l-4 border-amber-500 rounded p-4">
                   <div className="text-amber-800 font-bold mb-1 flex items-center gap-1.5">

@@ -3,10 +3,10 @@ import React from 'react';
 export default function Footer() {
   return (
     <footer className="bg-[#0c1f3c] text-gray-300 w-full mt-auto border-t-4 border-[#f15a24]">
-      
+
       {/* Upper Footer section */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        
+
         {/* Info Column */}
         <div>
           <h4 className="text-white font-bold text-sm uppercase mb-4 tracking-wider border-b border-gray-700 pb-2">
@@ -69,7 +69,7 @@ export default function Footer() {
           <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
             We Accept Secure Payments
           </div>
-          
+
           <div className="flex flex-wrap gap-2 items-center justify-center">
             {/* bkash */}
             <span className="bg-[#e2136e] text-white text-[10px] font-black px-2.5 py-1 rounded select-none">
@@ -84,13 +84,7 @@ export default function Footer() {
               Rocket
             </span>
             {/* visa */}
-            <span className="bg-[#1a1f71] text-white text-[10px] font-black px-2.5 py-1 rounded select-none">
-              VISA
-            </span>
-            {/* mastercard */}
-            <span className="bg-[#eb001b] text-white text-[10px] font-black px-2.5 py-1 rounded select-none">
-              Mastercard
-            </span>
+
             {/* cod */}
             <span className="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded select-none">
               Cash On Delivery
