@@ -21,12 +21,15 @@ export default function Banner() {
             className={`group relative h-[240px] sm:h-[320px] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 block bg-gray-50 border border-gray-100
               ${index >= 2 ? 'hidden sm:block lg:block' : 'block'}`}
           >
-            {/* Banner Graphic Image */}
+            {/* Banner Graphic Image with softening eye-comfort filters */}
             <img
               src={banner.image}
               alt={`Banner option ${banner.id}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+              className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.02] brightness-[0.88] contrast-[0.96] saturate-[0.96] group-hover:brightness-95 group-hover:contrast-100"
             />
+            
+            {/* Subtle soft dark overlay to take off the harsh glare */}
+            <div className="absolute inset-0 bg-slate-950/[0.03] group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
           </Link>
         ))}
       </div>
