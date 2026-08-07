@@ -1,7 +1,23 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import { Magnifier, Person, ShoppingCart, Bars, ArrowChevronDown, Thunderbolt } from '@gravity-ui/icons';
 
 export default function Header() {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
+  const categories = [
+    "Solar & Green Energy",
+    "Solar Inverters",
+    "Solar Batteries",
+    "Featured Smartwatches",
+    "Audio Paradise",
+    "Daily Essential Gadgets",
+    "Computing Power",
+    "Mobile World",
+    "Electronics Hub"
+  ];
+
   return (
     <header className="w-full bg-white flex flex-col border-b border-gray-200">
       
@@ -43,7 +59,6 @@ export default function Header() {
           </button>
         </div>
 
-
         {/* User Account & Cart Panel */}
         <div className="flex items-center gap-6">
           {/* Cart */}
@@ -73,15 +88,35 @@ export default function Header() {
       </div>
 
       {/* Navigation bar */}
-      <div className="bg-[#0e52b2] text-white w-full">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+      <div className="bg-[#0e52b2] text-white w-full relative z-40">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between relative">
           
           {/* Category Dropdown Toggle */}
-          <div className="bg-[#0b3d87] hover:bg-[#09306b] px-4 py-3 flex items-center gap-2 cursor-pointer font-bold text-xs sm:text-sm tracking-wide uppercase transition-colors duration-200">
+          <div 
+            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+            className="bg-[#0b3d87] hover:bg-[#09306b] px-4 py-3 flex items-center gap-2 cursor-pointer font-bold text-xs sm:text-sm tracking-wide uppercase transition-colors duration-200 select-none"
+          >
             <Bars className="w-4 h-4" />
             <span>Shop by Category</span>
             <ArrowChevronDown className="w-3.5 h-3.5 ml-1" />
           </div>
+
+          {/* Absolute Categories Dropdown Menu */}
+          {isCategoryOpen && (
+            <div className="absolute top-full left-4 w-60 bg-white border border-gray-200 shadow-xl rounded-b-lg z-50 py-1 divide-y divide-gray-100 animate-in fade-in slide-in-from-top-2 duration-150">
+              {categories.map((cat, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  onClick={() => setIsCategoryOpen(false)}
+                  className="block px-4 py-2.5 hover:bg-gray-50 text-gray-700 hover:text-[#0e52b2] font-semibold text-xs transition-colors duration-150 flex justify-between items-center"
+                >
+                  <span>{cat}</span>
+                  <span className="text-gray-300 text-[10px]">&raquo;</span>
+                </a>
+              ))}
+            </div>
+          )}
 
           {/* Navigation Links */}
           <nav className="flex items-center flex-1 overflow-x-auto whitespace-nowrap scrollbar-none text-xs sm:text-sm font-semibold pl-4 gap-4 md:gap-6 py-3">
