@@ -129,8 +129,8 @@ export default function Header() {
               Hot Deals
             </a>
             <Link href="/products" className="hover:text-amber-300 transition-colors duration-200">All Products</Link>
-            <a href="#" className="hover:text-amber-300 transition-colors duration-200">About Us</a>
-            <a href="#" className="hover:text-amber-300 transition-colors duration-200">Contact</a>
+            <Link href="/about" className="hover:text-amber-300 transition-colors duration-200">About Us</Link>
+            <Link href="/contact" className="hover:text-amber-300 transition-colors duration-200">Contact</Link>
             <a href="#" className="hover:text-amber-300 transition-colors duration-200">Track Order</a>
           </nav>
 
