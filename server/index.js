@@ -137,6 +137,27 @@ async function run() {
       }
     });
 
+    /**
+     * GET /api/products
+     * Retrieves all products in the "intouch" database sorted by newest first.
+     */
+    app.get('/api/products', async (req, res) => {
+      try {
+        const db = client.db("intouch");
+        const productsCollection = db.collection("products");
+
+        const products = await productsCollection.find({}).sort({ _id: -1 }).toArray();
+        res.json(products);
+
+      } catch (error) {
+        console.error("Fetch all products error:", error);
+        res.status(500).json({
+          success: false,
+          error: "Internal Server Error"
+        });
+      }
+    });
+
   } finally {
     // Ensures that the client will close when you finish/error
     // NOTE: Commented out client.close() so the database connection stays active for incoming requests

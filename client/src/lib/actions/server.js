@@ -57,3 +57,29 @@ export async function getProductDetailsData(id) {
     return null;
   }
 }
+
+export async function getAllProductsData() {
+  try {
+    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    
+    const res = await fetch(`${apiURL}/api/products`, {
+      cache: 'no-store' // Do not cache, ensure fresh data
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch all products: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+
+    // Map MongoDB _id to standard id field for each product
+    return data.map(product => ({
+      ...product,
+      id: product._id
+    }));
+
+  } catch (error) {
+    console.error("Error in getAllProductsData Server Action:", error);
+    return [];
+  }
+}

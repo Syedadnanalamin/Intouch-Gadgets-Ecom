@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Magnifier, Person, ShoppingCart, Bars, ArrowChevronDown, Thunderbolt } from '@gravity-ui/icons';
 
 export default function Header() {
@@ -120,14 +121,14 @@ export default function Header() {
 
           {/* Navigation Links */}
           <nav className="flex items-center flex-1 overflow-x-auto whitespace-nowrap scrollbar-none text-xs sm:text-sm font-semibold pl-4 gap-4 md:gap-6 py-3">
-            <a href="#" className="hover:text-amber-300 transition-colors duration-200 flex items-center gap-1">
+            <Link href="/" className="hover:text-amber-300 transition-colors duration-200 flex items-center gap-1">
               Home
-            </a>
+            </Link>
             <a href="#" className="text-amber-300 hover:text-amber-400 transition-colors duration-200 flex items-center gap-1 animate-pulse">
               <Thunderbolt className="w-3.5 h-3.5 fill-current" />
               Hot Deals
             </a>
-            <a href="#" className="hover:text-amber-300 transition-colors duration-200">All Products</a>
+            <Link href="/products" className="hover:text-amber-300 transition-colors duration-200">All Products</Link>
             <a href="#" className="hover:text-amber-300 transition-colors duration-200">About Us</a>
             <a href="#" className="hover:text-amber-300 transition-colors duration-200">Contact</a>
             <a href="#" className="hover:text-amber-300 transition-colors duration-200">Track Order</a>
