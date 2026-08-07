@@ -83,3 +83,48 @@ export async function getAllProductsData() {
     return [];
   }
 }
+
+export async function createOrderData(orderPayload) {
+  try {
+    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    
+    const res = await fetch(`${apiURL}/api/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(orderPayload),
+      cache: 'no-store'
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to place order: ${res.statusText}`);
+    }
+
+    return await res.json();
+
+  } catch (error) {
+    console.error("Error in createOrderData Server Action:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function getOrderDetailsData(orderId) {
+  try {
+    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    
+    const res = await fetch(`${apiURL}/api/orders/${orderId}`, {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch order details for ID ${orderId}: ${res.statusText}`);
+    }
+
+    return await res.json();
+
+  } catch (error) {
+    console.error(`Error in getOrderDetailsData Server Action for ID ${orderId}:`, error);
+    return null;
+  }
+}

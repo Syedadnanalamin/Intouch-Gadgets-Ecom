@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { createOrderData } from '@/lib/actions/server';
 import { ShoppingCart, Person, Lock, House, GeoPin, Car, Clock, CreditCard, FileText, ShieldCheck, Tag } from '@gravity-ui/icons';
 
 export default function CheckoutPage() {
@@ -85,19 +86,7 @@ export default function CheckoutPage() {
         couponApplied
       };
 
-      const res = await fetch(`${apiURL}/api/orders`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderPayload)
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to place order on server.");
-      }
-
-      const data = await res.json();
+      const data = await createOrderData(orderPayload);
 
       if (data.success) {
         // Reset shopping cart state
@@ -105,7 +94,7 @@ export default function CheckoutPage() {
         // Redirect to dynamic professional thankyou page
         router.push(`/thankyou?orderId=${data.orderId}`);
       } else {
-        alert("Failed to place order. Please try again.");
+        alert(data.error || "Failed to place order. Please try again.");
       }
     } catch (error) {
       console.error("Place order error:", error);

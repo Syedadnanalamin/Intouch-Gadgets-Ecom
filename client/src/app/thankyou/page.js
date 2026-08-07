@@ -4,6 +4,7 @@ import React, { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ShieldCheck, House, ShoppingCart } from '@gravity-ui/icons';
+import { getOrderDetailsData } from '@/lib/actions/server';
 
 function ThankYouContent() {
   const searchParams = useSearchParams();
@@ -20,15 +21,11 @@ function ThankYouContent() {
       return;
     }
 
-    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-    fetch(`${apiURL}/api/orders/${orderId}`)
-      .then(res => {
-        if (!res.ok) {
+    getOrderDetailsData(orderId)
+      .then(data => {
+        if (!data) {
           throw new Error("Order not found in database.");
         }
-        return res.json();
-      })
-      .then(data => {
         setOrder(data);
         setLoading(false);
       })
