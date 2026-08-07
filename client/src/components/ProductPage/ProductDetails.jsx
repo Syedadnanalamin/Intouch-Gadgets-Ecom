@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShoppingCart, StarFill, Star, Thunderbolt } from '@gravity-ui/icons';
+import { ShoppingCart, StarFill, Star, Thunderbolt, House, GeoPin, Car } from '@gravity-ui/icons';
 import { useCart } from '@/context/CartContext';
 
 export default function ProductDetails({ product }) {
@@ -12,6 +12,11 @@ export default function ProductDetails({ product }) {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    window.location.href = '/checkout';
   };
 
   const formatPrice = (amount) => {
@@ -126,61 +131,81 @@ export default function ProductDetails({ product }) {
             {/* Delivery Cost Info */}
             <div className="text-xs text-gray-600 mb-5 flex flex-col gap-1 border-b border-gray-100 pb-4">
               <div>Delivery Charges:</div>
-              <div className="font-semibold text-gray-800">
-                Inside Dhaka: ৳450 | Outside Dhaka: ৳1,000
+              <div className="text-xs text-gray-500 font-medium">
+                Inside Dhaka: ৳60 | Outside Dhaka: ৳120
               </div>
             </div>
 
             {/* Action Bar (Qty and Buttons) */}
-            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center border-b border-gray-100 pb-5 mb-5">
+            <div className="flex flex-col gap-4 border-b border-gray-100 pb-5 mb-5">
               
               {/* Qty Selector */}
-              <div className="flex items-center border border-gray-300 rounded overflow-hidden h-11 w-32 justify-between">
-                <button
-                  onClick={() => handleQtyChange('dec')}
-                  className="px-3 h-full hover:bg-gray-100 text-lg font-bold text-gray-500 transition-colors"
-                >
-                  -
-                </button>
-                <span className="font-bold text-sm text-gray-800">{quantity}</span>
-                <button
-                  onClick={() => handleQtyChange('inc')}
-                  className="px-3 h-full hover:bg-gray-100 text-lg font-bold text-gray-500 transition-colors"
-                >
-                  +
-                </button>
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Quantity:</span>
+                <div className="flex items-center border border-gray-300 rounded overflow-hidden h-10 w-28 justify-between bg-white">
+                  <button
+                    onClick={() => handleQtyChange('dec')}
+                    className="px-2.5 h-full hover:bg-gray-100 text-base font-bold text-gray-500 transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="font-bold text-xs text-gray-800">{quantity}</span>
+                  <button
+                    onClick={() => handleQtyChange('inc')}
+                    className="px-2.5 h-full hover:bg-gray-100 text-base font-bold text-gray-500 transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
-              {/* Add to Order Button */}
-              <button 
-                onClick={handleAddToCart}
-                className="flex-1 bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold rounded-md h-11 px-6 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Add to Order
-              </button>
+              {/* Action Buttons Row - always side by side! */}
+              <div className="flex flex-row gap-3 w-full">
+                
+                {/* Add to Order Button */}
+                <button 
+                  onClick={handleAddToCart}
+                  className="flex-1 bg-[#0e52b2] hover:bg-[#0b3d87] text-white font-bold rounded-md h-11 px-3 flex items-center justify-center gap-1.5 shadow-sm transition-all text-xs sm:text-sm active:scale-[0.99]"
+                >
+                  <ShoppingCart className="w-3.5 h-3.5" />
+                  Add to Order
+                </button>
 
-              {/* Buy Now Button */}
-              <button className="flex-1 bg-[#0c1f3c] hover:bg-black text-white font-bold rounded-md h-11 px-6 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]">
-                <Thunderbolt className="w-4 h-4 text-amber-400 fill-current" />
-                Buy Now
-              </button>
+                {/* Buy Now Button */}
+                <button 
+                  onClick={handleBuyNow}
+                  className="flex-1 bg-[#0c1f3c] hover:bg-black text-white font-bold rounded-md h-11 px-3 flex items-center justify-center gap-1.5 shadow-sm transition-all text-xs sm:text-sm active:scale-[0.99]"
+                >
+                  <Thunderbolt className="w-3.5 h-3.5 text-amber-400 fill-current" />
+                  Buy Now
+                </button>
+
+              </div>
             </div>
 
             {/* Shipping Detail list */}
             <div className="bg-[#f8fafc] border border-gray-200 rounded-lg p-4">
-              <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Shipping & Delivery Options</h3>
-              <ul className="text-xs space-y-2 text-gray-600">
-                <li className="flex justify-between border-b border-gray-100 pb-1.5">
-                  <span>🏢 Office Pickup (Free)</span>
+              <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 select-none">Shipping & Delivery Options</h3>
+              <ul className="text-xs space-y-2.5 text-gray-600">
+                <li className="flex justify-between items-center border-b border-gray-150/60 pb-2">
+                  <span className="flex items-center gap-1.5">
+                    <House className="w-4 h-4 text-gray-500" />
+                    Office Pickup (Free)
+                  </span>
                   <span className="font-semibold text-gray-800">1-2 Business Days</span>
                 </li>
-                <li className="flex justify-between border-b border-gray-100 pb-1.5">
-                  <span>🚚 Inside Dhaka (৳1,000)</span>
+                <li className="flex justify-between items-center border-b border-gray-150/60 pb-2">
+                  <span className="flex items-center gap-1.5">
+                    <GeoPin className="w-4 h-4 text-[#0e52b2]" />
+                    Inside Dhaka (৳60)
+                  </span>
                   <span className="font-semibold text-gray-800">1-2 Business Days</span>
                 </li>
-                <li className="flex justify-between">
-                  <span>🚛 Outside Dhaka (৳1,400)</span>
+                <li className="flex justify-between items-center">
+                  <span className="flex items-center gap-1.5">
+                    <Car className="w-4 h-4 text-gray-500" />
+                    Outside Dhaka (৳120)
+                  </span>
                   <span className="font-semibold text-gray-800">3-5 Business Days</span>
                 </li>
               </ul>
