@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ProductCard from '@/components/shared/product-card/ProductCard';
 import { useCart } from '@/context/CartContext';
 import { LayoutCells, LayoutList, ChevronDown, ShoppingCart } from '@gravity-ui/icons';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProductListContainer({ initialProducts, categories }) {
   const { addToCart } = useCart();
@@ -51,6 +52,20 @@ export default function ProductListContainer({ initialProducts, categories }) {
   const [activeMaxPrice, setActiveMaxPrice] = useState('');
   const [activeBrand, setActiveBrand] = useState('All Brands');
   const [activeOnSale, setActiveOnSale] = useState(false);
+
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams ? searchParams.get('category') : null;
+
+  // React to category URL param changes
+  useEffect(() => {
+    if (categoryParam) {
+      setStagedCategory(categoryParam);
+      setActiveCategory(categoryParam);
+    } else {
+      setStagedCategory('All Categories');
+      setActiveCategory('All Categories');
+    }
+  }, [categoryParam]);
 
   // Toolbar & Sorting States
   const [viewType, setViewType] = useState('grid'); // 'grid' or 'list'

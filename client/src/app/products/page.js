@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { getAllProductsData, getFeaturedCategoriesData } from '@/lib/actions/server';
 import ProductListContainer from '@/components/product-list/ProductListContainer';
 
@@ -32,7 +32,9 @@ export default async function AllProductsPage() {
         </div>
 
         {/* Interactive Container with filters and layouts */}
-        <ProductListContainer initialProducts={products} categories={categories} />
+        <Suspense fallback={<div className="text-center py-12 text-gray-500 font-semibold">Loading products...</div>}>
+          <ProductListContainer initialProducts={products} categories={categories} />
+        </Suspense>
 
       </div>
     </div>

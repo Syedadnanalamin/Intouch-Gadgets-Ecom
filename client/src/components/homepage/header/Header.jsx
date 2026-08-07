@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Magnifier, Person, ShoppingCart, Bars, ArrowChevronDown, Thunderbolt } from '@gravity-ui/icons';
 import { useCart } from '@/context/CartContext';
@@ -8,18 +8,32 @@ import { useCart } from '@/context/CartContext';
 export default function Header() {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const { cartCount, cartTotal, setIsCartDrawerOpen } = useCart();
+  const [categories, setCategories] = useState([]);
 
-  const categories = [
-    "Solar & Green Energy",
-    "Solar Inverters",
-    "Solar Batteries",
-    "Featured Smartwatches",
-    "Audio Paradise",
-    "Daily Essential Gadgets",
-    "Computing Power",
-    "Mobile World",
-    "Electronics Hub"
-  ];
+  useEffect(() => {
+    const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(data => {
+        const names = data.map(cat => cat.name);
+        setCategories(names);
+      })
+      .catch(err => {
+        console.error("Failed to load header categories:", err);
+        // Safe static fallback to keep navigation functional
+        setCategories([
+          "Solar & Green Energy",
+          "Solar Inverters",
+          "Solar Batteries",
+          "Featured Smartwatches",
+          "Audio Paradise",
+          "Daily Essential Gadgets",
+          "Computing Power",
+          "Mobile World",
+          "Electronics Hub"
+        ]);
+      });
+  }, []);
 
   return (
     <header className="w-full bg-white flex flex-col border-b border-gray-200">
@@ -111,15 +125,15 @@ export default function Header() {
           {isCategoryOpen && (
             <div className="absolute top-full left-4 w-60 bg-white border border-gray-200 shadow-xl rounded-b-lg z-50 py-1 divide-y divide-gray-100 animate-in fade-in slide-in-from-top-2 duration-150">
               {categories.map((cat, index) => (
-                <a
+                <Link
                   key={index}
-                  href="#"
+                  href={`/products?category=${encodeURIComponent(cat)}`}
                   onClick={() => setIsCategoryOpen(false)}
                   className="block px-4 py-2.5 hover:bg-gray-50 text-gray-700 hover:text-[#0e52b2] font-semibold text-xs transition-colors duration-150 flex justify-between items-center"
                 >
                   <span>{cat}</span>
                   <span className="text-gray-300 text-[10px]">&raquo;</span>
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -208,15 +222,15 @@ export default function Header() {
         {isCategoryOpen && (
           <div className="absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-xl z-50 py-1 divide-y divide-gray-100 animate-in fade-in slide-in-from-top-2 duration-150">
             {categories.map((cat, index) => (
-              <a
+              <Link
                 key={index}
-                href="#"
+                href={`/products?category=${encodeURIComponent(cat)}`}
                 onClick={() => setIsCategoryOpen(false)}
                 className="block px-6 py-3 hover:bg-gray-50 text-gray-700 hover:text-[#0e52b2] font-bold text-xs transition-colors flex justify-between items-center"
               >
                 <span>{cat}</span>
                 <span className="text-gray-400 text-[10px]">&raquo;</span>
-              </a>
+              </Link>
             ))}
           </div>
         )}
