@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <div className="w-full bg-[#f4f7fa] min-h-screen pb-12">
-      
+
       {/* Top Banner section */}
       <Banner />
 
