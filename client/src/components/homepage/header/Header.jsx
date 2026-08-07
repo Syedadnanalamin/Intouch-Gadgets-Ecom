@@ -12,7 +12,7 @@ export default function Header() {
 
   useEffect(() => {
     const apiURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-    fetch(apiURL)
+    fetch(`${apiURL}/api/products/featured`)
       .then(res => res.json())
       .then(data => {
         const names = data.map(cat => cat.name);
