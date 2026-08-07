@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { ShoppingCart, Person, Lock, House, GeoPin, Car, Clock, CreditCard, FileText, ShieldCheck, Tag } from '@gravity-ui/icons';
 
 export default function CheckoutPage() {
   const {
@@ -102,7 +103,7 @@ export default function CheckoutPage() {
                 
                 {/* Title */}
                 <h1 className="text-xl sm:text-2xl font-black text-gray-900 border-b border-gray-100 pb-4 mb-6 flex items-center gap-2 select-none">
-                  <span className="text-[#0e52b2]">💳</span> Checkout
+                  <CreditCard className="w-6 h-6 text-[#0e52b2]" /> Checkout
                 </h1>
 
                 {/* Customer Information Block */}
@@ -110,8 +111,8 @@ export default function CheckoutPage() {
                   
                   <div className="flex justify-between items-center">
                     <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wider">Customer Information</h2>
-                    <a href="#" className="text-xs font-bold text-[#0e52b2] hover:underline">
-                      🔑 Login to auto-fill
+                    <a href="#" className="text-xs font-bold text-[#0e52b2] hover:underline flex items-center gap-1">
+                      <Lock className="w-3 h-3" /> Login to auto-fill
                     </a>
                   </div>
 
@@ -153,8 +154,8 @@ export default function CheckoutPage() {
                     />
                   </div>
 
-                  <p className="text-[10px] text-gray-400 font-medium">
-                    🔑 <a href="#" className="text-[#0e52b2] hover:underline">Login</a> or <a href="#" className="text-[#0e52b2] hover:underline">register</a> to save addresses for faster checkout next time.
+                  <p className="text-[10px] text-gray-400 font-medium flex items-center gap-1">
+                    <Lock className="w-3 h-3 text-[#0e52b2]" /> <a href="#" className="text-[#0e52b2] hover:underline">Login</a> or <a href="#" className="text-[#0e52b2] hover:underline">register</a> to save addresses for faster checkout next time.
                   </p>
 
                 </div>
@@ -183,7 +184,7 @@ export default function CheckoutPage() {
                           <div className="text-[9px] text-gray-400">Free</div>
                         </div>
                       </div>
-                      <span className="text-sm">🏢</span>
+                      <House className="w-4 h-4 text-gray-500" />
                     </div>
 
                     {/* Inside Dhaka */}
@@ -204,7 +205,7 @@ export default function CheckoutPage() {
                           <div className="text-[9px] text-gray-400">৳14,400</div>
                         </div>
                       </div>
-                      <span className="text-sm">📍</span>
+                      <GeoPin className="w-4 h-4 text-gray-500" />
                     </div>
 
                     {/* Outside Dhaka */}
@@ -225,20 +226,20 @@ export default function CheckoutPage() {
                           <div className="text-[9px] text-gray-400">৳15,900</div>
                         </div>
                       </div>
-                      <span className="text-sm">🚚</span>
+                      <Car className="w-4 h-4 text-gray-500" />
                     </div>
 
                   </div>
 
                   {/* Delivery Status Alert Line */}
-                  <div className="mt-4 bg-blue-50 border border-blue-100 rounded-md p-2.5 text-[10px] sm:text-xs text-blue-800 flex flex-wrap gap-x-4 items-center">
+                  <div className="mt-4 bg-blue-50 border border-blue-100 rounded-md p-2.5 text-[10px] sm:text-xs text-blue-800 flex flex-wrap gap-y-4 items-center">
                     <span><strong>Selected:</strong> {deliveryArea === 'office' ? 'Office Pickup' : deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}</span>
                     <span className="text-blue-300">|</span>
                     <span><strong>Charge:</strong> {deliveryFee > 0 ? `৳${formatPrice(deliveryFee)}` : 'Free'}</span>
                     <span className="text-blue-300">|</span>
                     <span><strong>Time:</strong> {deliveryTime}</span>
                     <span className="text-blue-300">|</span>
-                    <span className="text-emerald-700">🎁 Free delivery above ৳100,000,000.00</span>
+                    <span className="text-emerald-700 flex items-center gap-1"><Tag className="w-3.5 h-3.5 text-emerald-600" /> Free delivery above ৳100,000,000.00</span>
                   </div>
 
                 </div>
@@ -287,7 +288,7 @@ export default function CheckoutPage() {
                           onChange={() => setPaymentGateway('pay_30')}
                           className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
                         />
-                        <span className="font-bold text-[11px] sm:text-xs text-gray-800">⏱ Pay in 30 min</span>
+                        <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-amber-500" /> Pay in 30 min</span>
                       </div>
                       <span className="text-[9px] text-red-500 font-bold ml-6">
                         Order will be cancelled if not paid
@@ -324,7 +325,7 @@ export default function CheckoutPage() {
                         onChange={() => setPaymentGateway('online')}
                         className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
                       />
-                      <span className="font-bold text-[11px] sm:text-xs text-gray-800">🟢 Pay Online</span>
+                      <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><CreditCard className="w-3.5 h-3.5 text-emerald-600" /> Pay Online</span>
                     </div>
 
                   </div>
@@ -343,7 +344,7 @@ export default function CheckoutPage() {
                           onChange={() => setPaymentGateway('credit')}
                           className="text-[#0e52b2] focus:ring-[#0e52b2] w-4 h-4"
                         />
-                        <span className="font-bold text-[11px] sm:text-xs text-gray-800">💳 Use Credit</span>
+                        <span className="font-bold text-[11px] sm:text-xs text-gray-800 flex items-center gap-1"><CreditCard className="w-3.5 h-3.5 text-gray-500" /> Use Credit</span>
                       </div>
                       <span className="text-[9px] text-gray-400 font-medium ml-6">
                         Check by phone
@@ -352,16 +353,13 @@ export default function CheckoutPage() {
                   </div>
 
                 </div>
-
-              </div>
-
-              {/* Order Submission Panel */}
-              <div className="text-center">
+                {/* Order Submission Panel */}
+                <div className="text-center">
                 <button
                   type="submit"
                   className="w-full bg-[#0c1f3c] hover:bg-black text-white font-bold py-3.5 px-6 rounded-md shadow-sm transition-all text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 active:scale-[0.99]"
                 >
-                  📝 Place Order
+                  <FileText className="w-4 h-4" /> Place Order
                 </button>
                 <p className="text-[10px] text-gray-400 mt-2 font-medium">
                   By placing your order, you agree to our terms and conditions.
@@ -376,7 +374,7 @@ export default function CheckoutPage() {
               <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm flex flex-col">
                 
                 <h2 className="text-gray-800 text-base font-bold flex items-center gap-2 border-b border-gray-100 pb-4 mb-5 select-none">
-                  <span>📋</span> Order Summary
+                  <FileText className="w-5 h-5 text-gray-500" /> Order Summary
                 </h2>
 
                 {/* Items in Cart list */}
