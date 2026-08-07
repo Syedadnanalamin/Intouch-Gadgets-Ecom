@@ -18,7 +18,7 @@ export default function Banner() {
           <Link
             key={banner.id}
             href={banner.link}
-            className={`group relative h-[240px] sm:h-[320px] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 block bg-gray-50 border border-gray-100
+            className={`group relative h-[185px] sm:h-[280px] md:h-[320px] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 block bg-gray-50 border border-gray-100
               ${index >= 2 ? 'hidden sm:block lg:block' : 'block'}`}
           >
             {/* Banner Graphic Image with softening eye-comfort filters */}
