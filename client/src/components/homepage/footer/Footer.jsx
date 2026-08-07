@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-[#0c1f3c] text-gray-300 w-full mt-auto border-t-4 border-[#f15a24]">
       
       {/* Upper Footer section */}
-      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         
         {/* Info Column */}
         <div>
@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       {/* Payment Partner Badges Section */}
-      <div className="bg-[#09182f] border-t border-gray-800 py-4 px-4">
+      <div className="bg-[#09182f] border-t border-gray-800 py-4 px-6 sm:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
             We Accept Secure Payments
@@ -100,7 +100,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Copyright */}
-      <div className="bg-[#061122] py-4 px-4 text-center text-xs text-gray-500">
+      <div className="bg-[#061122] py-4 px-6 sm:px-8 text-center text-xs text-gray-500">
         &copy; {new Date().getFullYear()} Intouch Gadgets. Developed for Bangladeshi Audience. All rights reserved.
       </div>
 
