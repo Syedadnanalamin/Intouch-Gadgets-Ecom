@@ -44,12 +44,12 @@ export default function CheckoutPage() {
   let deliveryText = "Free";
   let deliveryTime = "Same day";
   if (deliveryArea === 'inside') {
-    deliveryFee = 14400;
-    deliveryText = "৳14,400";
+    deliveryFee = 60;
+    deliveryText = "৳60";
     deliveryTime = "1-2 days";
   } else if (deliveryArea === 'outside') {
-    deliveryFee = 15900;
-    deliveryText = "৳15,900";
+    deliveryFee = 120;
+    deliveryText = "৳120";
     deliveryTime = "3-5 days";
   }
 
@@ -241,7 +241,7 @@ export default function CheckoutPage() {
                         />
                         <div>
                           <div className="font-bold text-[11px] sm:text-xs text-gray-800">Inside Dhaka</div>
-                          <div className="text-[9px] text-gray-400">৳14,400</div>
+                          <div className="text-[9px] text-gray-400">৳60</div>
                         </div>
                       </div>
                       <GeoPin className="w-4 h-4 text-gray-500" />
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
                         />
                         <div>
                           <div className="font-bold text-[11px] sm:text-xs text-gray-800">Outside Dhaka</div>
-                          <div className="text-[9px] text-gray-400">৳15,900</div>
+                          <div className="text-[9px] text-gray-400">৳120</div>
                         </div>
                       </div>
                       <Car className="w-4 h-4 text-gray-500" />

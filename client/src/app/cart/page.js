@@ -19,7 +19,7 @@ export default function CartPage() {
 
   // Delivery options: matching the screenshot fees
   const [deliveryMethod, setDeliveryMethod] = useState('inside'); // 'inside' or 'outside'
-  const deliveryFee = deliveryMethod === 'inside' ? 14400 : 15900;
+  const deliveryFee = deliveryMethod === 'inside' ? 60 : 120;
 
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
@@ -211,7 +211,7 @@ export default function CartPage() {
                         <div className="text-[10px] text-gray-400 font-medium">1-2 days</div>
                       </div>
                     </div>
-                    <span className="font-black text-xs sm:text-sm text-gray-900">৳14,400</span>
+                    <span className="font-black text-xs sm:text-sm text-gray-900">৳60</span>
                   </div>
 
                   {/* Outside Dhaka */}
@@ -229,7 +229,7 @@ export default function CartPage() {
                         <div className="text-[10px] text-gray-400 font-medium">3-5 days</div>
                       </div>
                     </div>
-                    <span className="font-black text-xs sm:text-sm text-gray-900">৳15,900</span>
+                    <span className="font-black text-xs sm:text-sm text-gray-900">৳120</span>
                   </div>
 
                 </div>

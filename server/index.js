@@ -189,7 +189,7 @@ async function run() {
         const discount = couponApplied ? subtotal * 0.1 : 0;
         const netSubtotal = subtotal - discount;
 
-        const deliveryFee = deliveryArea === 'inside' ? 14400 : deliveryArea === 'outside' ? 15900 : 0;
+        const deliveryFee = deliveryArea === 'inside' ? 60 : deliveryArea === 'outside' ? 120 : 0;
         const finalTotal = netSubtotal + deliveryFee;
 
         const orderDoc = {
