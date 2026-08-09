@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { createOrderData } from '@/lib/actions/server';
+import { event as fbEvent } from '@/lib/fpixel';
 import { ShoppingCart, Person, Lock, House, GeoPin, Car, Clock, CreditCard, FileText, ShieldCheck, Tag } from '@gravity-ui/icons';
 
 export default function CheckoutPage() {
@@ -17,6 +18,19 @@ export default function CheckoutPage() {
 
   // Get only checked items for checkout
   const checkoutItems = cartItems.filter(item => selectedItems.includes(item.id));
+
+  // Trigger InitiateCheckout on page mount
+  useEffect(() => {
+    if (checkoutItems.length > 0) {
+      const totalVal = checkoutItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      fbEvent('InitiateCheckout', {
+        content_ids: checkoutItems.map(item => item.id),
+        num_items: checkoutItems.length,
+        value: totalVal,
+        currency: 'BDT',
+      });
+    }
+  }, []);
 
   // Form states
   const [fullName, setFullName] = useState('');
@@ -84,6 +98,15 @@ export default function CheckoutPage() {
       const data = await createOrderData(orderPayload);
 
       if (data.success) {
+        // Fire Meta Pixel Purchase Event
+        fbEvent('Purchase', {
+          content_ids: checkoutItems.map(item => item.id),
+          content_type: 'product',
+          value: finalTotal,
+          currency: 'BDT',
+          num_items: checkoutItems.length,
+        }, data.orderId);
+
         // Reset shopping cart state
         clearCart();
         // Redirect to dynamic professional thankyou page
@@ -96,6 +119,7 @@ export default function CheckoutPage() {
       alert("An error occurred while processing your order. Please try again later.");
     }
   };
+
 
   return (
     <div className="w-full bg-[#f4f7fa] min-h-screen py-10 text-gray-700">

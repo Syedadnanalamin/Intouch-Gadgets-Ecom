@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingCart, StarFill, Star, Thunderbolt, House, GeoPin, Car } from '@gravity-ui/icons';
 import { useCart } from '@/context/CartContext';
+import { event as fbEvent } from '@/lib/fpixel';
 
 export default function ProductDetails({ product }) {
   const [quantity, setQuantity] = useState(1);
@@ -10,14 +11,41 @@ export default function ProductDetails({ product }) {
   const [activeTab, setActiveTab] = useState("description");
   const { addToCart } = useCart();
 
+  useEffect(() => {
+    if (product) {
+      fbEvent('ViewContent', {
+        content_name: product.title,
+        content_ids: [product.id || product._id],
+        content_type: 'product',
+        value: product.price,
+        currency: 'BDT',
+      });
+    }
+  }, [product]);
+
   const handleAddToCart = () => {
     addToCart(product, quantity);
+    fbEvent('AddToCart', {
+      content_name: product.title,
+      content_ids: [product.id || product._id],
+      content_type: 'product',
+      value: product.price * quantity,
+      currency: 'BDT',
+    });
   };
 
   const handleBuyNow = () => {
     addToCart(product, quantity);
+    fbEvent('AddToCart', {
+      content_name: product.title,
+      content_ids: [product.id || product._id],
+      content_type: 'product',
+      value: product.price * quantity,
+      currency: 'BDT',
+    });
     window.location.href = '/checkout';
   };
+
 
   const formatPrice = (amount) => {
     return amount.toLocaleString('en-IN');

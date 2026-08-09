@@ -1,4 +1,6 @@
 const { db } = require('../db');
+const { sendMetaCapiEvent } = require('../utils/metaCapi');
+
 
 /**
  * POST /api/orders
@@ -51,10 +53,24 @@ const createOrder = async (req, res) => {
 
     await ordersCollection.insertOne(orderDoc);
 
+    // Dispatch Meta CAPI Purchase Server Event with orderId as eventId
+    sendMetaCapiEvent({
+      eventName: 'Purchase',
+      eventId: orderId,
+      value: finalTotal,
+      currency: 'BDT',
+      contentIds: items.map(i => i.id),
+      numItems: items.length,
+      clientIp: req.ip,
+      userAgent: req.headers['user-agent']
+    });
+
     res.status(201).json({
       success: true,
       orderId
     });
+
+
 
   } catch (error) {
     console.error("Create order error:", error);

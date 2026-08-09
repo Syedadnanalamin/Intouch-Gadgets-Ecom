@@ -1,11 +1,13 @@
 const { db } = require('../db');
 const { ObjectId } = require('mongodb');
+const { sendMetaCapiEvent } = require('../utils/metaCapi');
 
 /**
  * GET /api/products/featured
  * Retrieves active, featured categories along with their newest 5 products
  * dynamically queried from the "intouch" database.
  */
+
 const getFeaturedCategories = async (req, res) => {
   try {
     const categoriesCollection = db.collection("categories");
@@ -100,7 +102,20 @@ const getProductById = async (req, res) => {
       });
     }
 
+    // Dispatch Meta CAPI ViewContent Event
+    sendMetaCapiEvent({
+      eventName: 'ViewContent',
+      eventId: `view_${product._id}`,
+      value: product.price,
+      currency: 'BDT',
+      contentName: product.title,
+      contentIds: [product._id.toString()],
+      clientIp: req.ip,
+      userAgent: req.headers['user-agent']
+    });
+
     res.json(product);
+
 
   } catch (error) {
     console.error("Fetch product by ID error:", error);
